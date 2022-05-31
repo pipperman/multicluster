@@ -253,12 +253,12 @@ func (cq *ClusterQuery) Clone() *ClusterQuery {
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		ClusterID string `json:"cluster_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Cluster.Query().
-//		GroupBy(cluster.FieldName).
+//		GroupBy(cluster.FieldClusterID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -280,11 +280,11 @@ func (cq *ClusterQuery) GroupBy(field string, fields ...string) *ClusterGroupBy 
 // Example:
 //
 //	var v []struct {
-//		Name string `json:"name,omitempty"`
+//		ClusterID string `json:"cluster_id,omitempty"`
 //	}
 //
 //	client.Cluster.Query().
-//		Select(cluster.FieldName).
+//		Select(cluster.FieldClusterID).
 //		Scan(ctx, &v)
 //
 func (cq *ClusterQuery) Select(field string, fields ...string) *ClusterSelect {

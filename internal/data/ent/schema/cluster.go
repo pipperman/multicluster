@@ -17,8 +17,18 @@ type Cluster struct {
 func (Cluster) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("id"),
+		field.String("cluster_id"),
 		field.String("name"),
-		//field.JSON("images", []biz.Image{}),
+		field.String("cluster_type").
+			Default("managed"),
+		field.String("cluster_spec"),
+		field.String("version"),
+		field.String("profile").
+			Default("default"),
+		field.String("region_id"),
+		field.String("vpc_id"),
+		field.String("zone_id"),
+		field.Bool("enable_deletion_protection"),
 		field.Time("created_at").
 			Default(time.Now).SchemaType(map[string]string{
 			dialect.MySQL: "datetime",

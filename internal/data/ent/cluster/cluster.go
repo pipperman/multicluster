@@ -11,8 +11,26 @@ const (
 	Label = "cluster"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldClusterID holds the string denoting the cluster_id field in the database.
+	FieldClusterID = "cluster_id"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldClusterType holds the string denoting the cluster_type field in the database.
+	FieldClusterType = "cluster_type"
+	// FieldClusterSpec holds the string denoting the cluster_spec field in the database.
+	FieldClusterSpec = "cluster_spec"
+	// FieldVersion holds the string denoting the version field in the database.
+	FieldVersion = "version"
+	// FieldProfile holds the string denoting the profile field in the database.
+	FieldProfile = "profile"
+	// FieldRegionID holds the string denoting the region_id field in the database.
+	FieldRegionID = "region_id"
+	// FieldVpcID holds the string denoting the vpc_id field in the database.
+	FieldVpcID = "vpc_id"
+	// FieldZoneID holds the string denoting the zone_id field in the database.
+	FieldZoneID = "zone_id"
+	// FieldEnableDeletionProtection holds the string denoting the enable_deletion_protection field in the database.
+	FieldEnableDeletionProtection = "enable_deletion_protection"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -24,7 +42,16 @@ const (
 // Columns holds all SQL columns for cluster fields.
 var Columns = []string{
 	FieldID,
+	FieldClusterID,
 	FieldName,
+	FieldClusterType,
+	FieldClusterSpec,
+	FieldVersion,
+	FieldProfile,
+	FieldRegionID,
+	FieldVpcID,
+	FieldZoneID,
+	FieldEnableDeletionProtection,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 }
@@ -40,6 +67,10 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultClusterType holds the default value on creation for the "cluster_type" field.
+	DefaultClusterType string
+	// DefaultProfile holds the default value on creation for the "profile" field.
+	DefaultProfile string
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

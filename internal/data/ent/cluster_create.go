@@ -20,9 +20,79 @@ type ClusterCreate struct {
 	hooks    []Hook
 }
 
+// SetClusterID sets the "cluster_id" field.
+func (cc *ClusterCreate) SetClusterID(s string) *ClusterCreate {
+	cc.mutation.SetClusterID(s)
+	return cc
+}
+
 // SetName sets the "name" field.
 func (cc *ClusterCreate) SetName(s string) *ClusterCreate {
 	cc.mutation.SetName(s)
+	return cc
+}
+
+// SetClusterType sets the "cluster_type" field.
+func (cc *ClusterCreate) SetClusterType(s string) *ClusterCreate {
+	cc.mutation.SetClusterType(s)
+	return cc
+}
+
+// SetNillableClusterType sets the "cluster_type" field if the given value is not nil.
+func (cc *ClusterCreate) SetNillableClusterType(s *string) *ClusterCreate {
+	if s != nil {
+		cc.SetClusterType(*s)
+	}
+	return cc
+}
+
+// SetClusterSpec sets the "cluster_spec" field.
+func (cc *ClusterCreate) SetClusterSpec(s string) *ClusterCreate {
+	cc.mutation.SetClusterSpec(s)
+	return cc
+}
+
+// SetVersion sets the "version" field.
+func (cc *ClusterCreate) SetVersion(s string) *ClusterCreate {
+	cc.mutation.SetVersion(s)
+	return cc
+}
+
+// SetProfile sets the "profile" field.
+func (cc *ClusterCreate) SetProfile(s string) *ClusterCreate {
+	cc.mutation.SetProfile(s)
+	return cc
+}
+
+// SetNillableProfile sets the "profile" field if the given value is not nil.
+func (cc *ClusterCreate) SetNillableProfile(s *string) *ClusterCreate {
+	if s != nil {
+		cc.SetProfile(*s)
+	}
+	return cc
+}
+
+// SetRegionID sets the "region_id" field.
+func (cc *ClusterCreate) SetRegionID(s string) *ClusterCreate {
+	cc.mutation.SetRegionID(s)
+	return cc
+}
+
+// SetVpcID sets the "vpc_id" field.
+func (cc *ClusterCreate) SetVpcID(s string) *ClusterCreate {
+	cc.mutation.SetVpcID(s)
+	return cc
+}
+
+// SetZoneID sets the "zone_id" field.
+func (cc *ClusterCreate) SetZoneID(s string) *ClusterCreate {
+	cc.mutation.SetZoneID(s)
+	return cc
+}
+
+// SetEnableDeletionProtection sets the "enable_deletion_protection" field.
+func (cc *ClusterCreate) SetEnableDeletionProtection(b bool) *ClusterCreate {
+	cc.mutation.SetEnableDeletionProtection(b)
 	return cc
 }
 
@@ -112,6 +182,14 @@ func (cc *ClusterCreate) SaveX(ctx context.Context) *Cluster {
 
 // defaults sets the default values of the builder before save.
 func (cc *ClusterCreate) defaults() {
+	if _, ok := cc.mutation.ClusterType(); !ok {
+		v := cluster.DefaultClusterType
+		cc.mutation.SetClusterType(v)
+	}
+	if _, ok := cc.mutation.Profile(); !ok {
+		v := cluster.DefaultProfile
+		cc.mutation.SetProfile(v)
+	}
 	if _, ok := cc.mutation.CreatedAt(); !ok {
 		v := cluster.DefaultCreatedAt()
 		cc.mutation.SetCreatedAt(v)
@@ -124,8 +202,35 @@ func (cc *ClusterCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (cc *ClusterCreate) check() error {
+	if _, ok := cc.mutation.ClusterID(); !ok {
+		return &ValidationError{Name: "cluster_id", err: errors.New("ent: missing required field \"cluster_id\"")}
+	}
 	if _, ok := cc.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
+	}
+	if _, ok := cc.mutation.ClusterType(); !ok {
+		return &ValidationError{Name: "cluster_type", err: errors.New("ent: missing required field \"cluster_type\"")}
+	}
+	if _, ok := cc.mutation.ClusterSpec(); !ok {
+		return &ValidationError{Name: "cluster_spec", err: errors.New("ent: missing required field \"cluster_spec\"")}
+	}
+	if _, ok := cc.mutation.Version(); !ok {
+		return &ValidationError{Name: "version", err: errors.New("ent: missing required field \"version\"")}
+	}
+	if _, ok := cc.mutation.Profile(); !ok {
+		return &ValidationError{Name: "profile", err: errors.New("ent: missing required field \"profile\"")}
+	}
+	if _, ok := cc.mutation.RegionID(); !ok {
+		return &ValidationError{Name: "region_id", err: errors.New("ent: missing required field \"region_id\"")}
+	}
+	if _, ok := cc.mutation.VpcID(); !ok {
+		return &ValidationError{Name: "vpc_id", err: errors.New("ent: missing required field \"vpc_id\"")}
+	}
+	if _, ok := cc.mutation.ZoneID(); !ok {
+		return &ValidationError{Name: "zone_id", err: errors.New("ent: missing required field \"zone_id\"")}
+	}
+	if _, ok := cc.mutation.EnableDeletionProtection(); !ok {
+		return &ValidationError{Name: "enable_deletion_protection", err: errors.New("ent: missing required field \"enable_deletion_protection\"")}
 	}
 	if _, ok := cc.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New("ent: missing required field \"created_at\"")}
@@ -166,6 +271,14 @@ func (cc *ClusterCreate) createSpec() (*Cluster, *sqlgraph.CreateSpec) {
 		_node.ID = id
 		_spec.ID.Value = id
 	}
+	if value, ok := cc.mutation.ClusterID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterID,
+		})
+		_node.ClusterID = value
+	}
 	if value, ok := cc.mutation.Name(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -173,6 +286,70 @@ func (cc *ClusterCreate) createSpec() (*Cluster, *sqlgraph.CreateSpec) {
 			Column: cluster.FieldName,
 		})
 		_node.Name = value
+	}
+	if value, ok := cc.mutation.ClusterType(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterType,
+		})
+		_node.ClusterType = value
+	}
+	if value, ok := cc.mutation.ClusterSpec(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterSpec,
+		})
+		_node.ClusterSpec = value
+	}
+	if value, ok := cc.mutation.Version(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVersion,
+		})
+		_node.Version = value
+	}
+	if value, ok := cc.mutation.Profile(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldProfile,
+		})
+		_node.Profile = value
+	}
+	if value, ok := cc.mutation.RegionID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldRegionID,
+		})
+		_node.RegionID = value
+	}
+	if value, ok := cc.mutation.VpcID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVpcID,
+		})
+		_node.VpcID = value
+	}
+	if value, ok := cc.mutation.ZoneID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldZoneID,
+		})
+		_node.ZoneID = value
+	}
+	if value, ok := cc.mutation.EnableDeletionProtection(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: cluster.FieldEnableDeletionProtection,
+		})
+		_node.EnableDeletionProtection = value
 	}
 	if value, ok := cc.mutation.CreatedAt(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

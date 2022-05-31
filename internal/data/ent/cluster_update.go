@@ -27,9 +27,79 @@ func (cu *ClusterUpdate) Where(ps ...predicate.Cluster) *ClusterUpdate {
 	return cu
 }
 
+// SetClusterID sets the "cluster_id" field.
+func (cu *ClusterUpdate) SetClusterID(s string) *ClusterUpdate {
+	cu.mutation.SetClusterID(s)
+	return cu
+}
+
 // SetName sets the "name" field.
 func (cu *ClusterUpdate) SetName(s string) *ClusterUpdate {
 	cu.mutation.SetName(s)
+	return cu
+}
+
+// SetClusterType sets the "cluster_type" field.
+func (cu *ClusterUpdate) SetClusterType(s string) *ClusterUpdate {
+	cu.mutation.SetClusterType(s)
+	return cu
+}
+
+// SetNillableClusterType sets the "cluster_type" field if the given value is not nil.
+func (cu *ClusterUpdate) SetNillableClusterType(s *string) *ClusterUpdate {
+	if s != nil {
+		cu.SetClusterType(*s)
+	}
+	return cu
+}
+
+// SetClusterSpec sets the "cluster_spec" field.
+func (cu *ClusterUpdate) SetClusterSpec(s string) *ClusterUpdate {
+	cu.mutation.SetClusterSpec(s)
+	return cu
+}
+
+// SetVersion sets the "version" field.
+func (cu *ClusterUpdate) SetVersion(s string) *ClusterUpdate {
+	cu.mutation.SetVersion(s)
+	return cu
+}
+
+// SetProfile sets the "profile" field.
+func (cu *ClusterUpdate) SetProfile(s string) *ClusterUpdate {
+	cu.mutation.SetProfile(s)
+	return cu
+}
+
+// SetNillableProfile sets the "profile" field if the given value is not nil.
+func (cu *ClusterUpdate) SetNillableProfile(s *string) *ClusterUpdate {
+	if s != nil {
+		cu.SetProfile(*s)
+	}
+	return cu
+}
+
+// SetRegionID sets the "region_id" field.
+func (cu *ClusterUpdate) SetRegionID(s string) *ClusterUpdate {
+	cu.mutation.SetRegionID(s)
+	return cu
+}
+
+// SetVpcID sets the "vpc_id" field.
+func (cu *ClusterUpdate) SetVpcID(s string) *ClusterUpdate {
+	cu.mutation.SetVpcID(s)
+	return cu
+}
+
+// SetZoneID sets the "zone_id" field.
+func (cu *ClusterUpdate) SetZoneID(s string) *ClusterUpdate {
+	cu.mutation.SetZoneID(s)
+	return cu
+}
+
+// SetEnableDeletionProtection sets the "enable_deletion_protection" field.
+func (cu *ClusterUpdate) SetEnableDeletionProtection(b bool) *ClusterUpdate {
+	cu.mutation.SetEnableDeletionProtection(b)
 	return cu
 }
 
@@ -135,11 +205,74 @@ func (cu *ClusterUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := cu.mutation.ClusterID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterID,
+		})
+	}
 	if value, ok := cu.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: cluster.FieldName,
+		})
+	}
+	if value, ok := cu.mutation.ClusterType(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterType,
+		})
+	}
+	if value, ok := cu.mutation.ClusterSpec(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterSpec,
+		})
+	}
+	if value, ok := cu.mutation.Version(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVersion,
+		})
+	}
+	if value, ok := cu.mutation.Profile(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldProfile,
+		})
+	}
+	if value, ok := cu.mutation.RegionID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldRegionID,
+		})
+	}
+	if value, ok := cu.mutation.VpcID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVpcID,
+		})
+	}
+	if value, ok := cu.mutation.ZoneID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldZoneID,
+		})
+	}
+	if value, ok := cu.mutation.EnableDeletionProtection(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: cluster.FieldEnableDeletionProtection,
 		})
 	}
 	if value, ok := cu.mutation.CreatedAt(); ok {
@@ -175,9 +308,79 @@ type ClusterUpdateOne struct {
 	mutation *ClusterMutation
 }
 
+// SetClusterID sets the "cluster_id" field.
+func (cuo *ClusterUpdateOne) SetClusterID(s string) *ClusterUpdateOne {
+	cuo.mutation.SetClusterID(s)
+	return cuo
+}
+
 // SetName sets the "name" field.
 func (cuo *ClusterUpdateOne) SetName(s string) *ClusterUpdateOne {
 	cuo.mutation.SetName(s)
+	return cuo
+}
+
+// SetClusterType sets the "cluster_type" field.
+func (cuo *ClusterUpdateOne) SetClusterType(s string) *ClusterUpdateOne {
+	cuo.mutation.SetClusterType(s)
+	return cuo
+}
+
+// SetNillableClusterType sets the "cluster_type" field if the given value is not nil.
+func (cuo *ClusterUpdateOne) SetNillableClusterType(s *string) *ClusterUpdateOne {
+	if s != nil {
+		cuo.SetClusterType(*s)
+	}
+	return cuo
+}
+
+// SetClusterSpec sets the "cluster_spec" field.
+func (cuo *ClusterUpdateOne) SetClusterSpec(s string) *ClusterUpdateOne {
+	cuo.mutation.SetClusterSpec(s)
+	return cuo
+}
+
+// SetVersion sets the "version" field.
+func (cuo *ClusterUpdateOne) SetVersion(s string) *ClusterUpdateOne {
+	cuo.mutation.SetVersion(s)
+	return cuo
+}
+
+// SetProfile sets the "profile" field.
+func (cuo *ClusterUpdateOne) SetProfile(s string) *ClusterUpdateOne {
+	cuo.mutation.SetProfile(s)
+	return cuo
+}
+
+// SetNillableProfile sets the "profile" field if the given value is not nil.
+func (cuo *ClusterUpdateOne) SetNillableProfile(s *string) *ClusterUpdateOne {
+	if s != nil {
+		cuo.SetProfile(*s)
+	}
+	return cuo
+}
+
+// SetRegionID sets the "region_id" field.
+func (cuo *ClusterUpdateOne) SetRegionID(s string) *ClusterUpdateOne {
+	cuo.mutation.SetRegionID(s)
+	return cuo
+}
+
+// SetVpcID sets the "vpc_id" field.
+func (cuo *ClusterUpdateOne) SetVpcID(s string) *ClusterUpdateOne {
+	cuo.mutation.SetVpcID(s)
+	return cuo
+}
+
+// SetZoneID sets the "zone_id" field.
+func (cuo *ClusterUpdateOne) SetZoneID(s string) *ClusterUpdateOne {
+	cuo.mutation.SetZoneID(s)
+	return cuo
+}
+
+// SetEnableDeletionProtection sets the "enable_deletion_protection" field.
+func (cuo *ClusterUpdateOne) SetEnableDeletionProtection(b bool) *ClusterUpdateOne {
+	cuo.mutation.SetEnableDeletionProtection(b)
 	return cuo
 }
 
@@ -307,11 +510,74 @@ func (cuo *ClusterUpdateOne) sqlSave(ctx context.Context) (_node *Cluster, err e
 			}
 		}
 	}
+	if value, ok := cuo.mutation.ClusterID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterID,
+		})
+	}
 	if value, ok := cuo.mutation.Name(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: cluster.FieldName,
+		})
+	}
+	if value, ok := cuo.mutation.ClusterType(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterType,
+		})
+	}
+	if value, ok := cuo.mutation.ClusterSpec(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldClusterSpec,
+		})
+	}
+	if value, ok := cuo.mutation.Version(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVersion,
+		})
+	}
+	if value, ok := cuo.mutation.Profile(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldProfile,
+		})
+	}
+	if value, ok := cuo.mutation.RegionID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldRegionID,
+		})
+	}
+	if value, ok := cuo.mutation.VpcID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldVpcID,
+		})
+	}
+	if value, ok := cuo.mutation.ZoneID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: cluster.FieldZoneID,
+		})
+	}
+	if value, ok := cuo.mutation.EnableDeletionProtection(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeBool,
+			Value:  value,
+			Column: cluster.FieldEnableDeletionProtection,
 		})
 	}
 	if value, ok := cuo.mutation.CreatedAt(); ok {

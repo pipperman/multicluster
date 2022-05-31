@@ -9,7 +9,7 @@ import (
 
 // CreateCluster implements multicluster.ClusterServer.
 func (s *MultiClusterService) CreateCluster(ctx context.Context, in *v1.ClusterCreateRequest) (*v1.ClusterCreateReply, error) {
-	c, err := s.cls.CreateCluster(ctx, &biz.Cluster{Name: in.Name})
+	c, err := s.cls.CreateCluster(ctx, &biz.Cluster{Name: in.Name}, &biz.ClusterCreateOption{})
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,9 @@ func (s *MultiClusterService) CreateCluster(ctx context.Context, in *v1.ClusterC
 
 // GetCluster implements multicluster.ClusterServer.
 func (s *MultiClusterService) GetCluster(ctx context.Context, in *v1.ClusterRequest) (*v1.ClusterReply, error) {
-	_, err := s.cls.GetCluster(ctx, in.ClusterId)
+	_, err := s.cls.GetCluster(ctx, &biz.ClusterGetOption{
+		ClusterId: in.ClusterId,
+	})
 	if err != nil {
 		return nil, err
 	}

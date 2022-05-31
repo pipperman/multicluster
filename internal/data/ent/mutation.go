@@ -29,16 +29,25 @@ const (
 // ClusterMutation represents an operation that mutates the Cluster nodes in the graph.
 type ClusterMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *int64
-	name          *string
-	created_at    *time.Time
-	updated_at    *time.Time
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*Cluster, error)
-	predicates    []predicate.Cluster
+	op                         Op
+	typ                        string
+	id                         *int64
+	cluster_id                 *string
+	name                       *string
+	cluster_type               *string
+	cluster_spec               *string
+	version                    *string
+	profile                    *string
+	region_id                  *string
+	vpc_id                     *string
+	zone_id                    *string
+	enable_deletion_protection *bool
+	created_at                 *time.Time
+	updated_at                 *time.Time
+	clearedFields              map[string]struct{}
+	done                       bool
+	oldValue                   func(context.Context) (*Cluster, error)
+	predicates                 []predicate.Cluster
 }
 
 var _ ent.Mutation = (*ClusterMutation)(nil)
@@ -126,6 +135,42 @@ func (m *ClusterMutation) ID() (id int64, exists bool) {
 	return *m.id, true
 }
 
+// SetClusterID sets the "cluster_id" field.
+func (m *ClusterMutation) SetClusterID(s string) {
+	m.cluster_id = &s
+}
+
+// ClusterID returns the value of the "cluster_id" field in the mutation.
+func (m *ClusterMutation) ClusterID() (r string, exists bool) {
+	v := m.cluster_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldClusterID returns the old "cluster_id" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldClusterID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldClusterID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldClusterID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldClusterID: %w", err)
+	}
+	return oldValue.ClusterID, nil
+}
+
+// ResetClusterID resets all changes to the "cluster_id" field.
+func (m *ClusterMutation) ResetClusterID() {
+	m.cluster_id = nil
+}
+
 // SetName sets the "name" field.
 func (m *ClusterMutation) SetName(s string) {
 	m.name = &s
@@ -160,6 +205,294 @@ func (m *ClusterMutation) OldName(ctx context.Context) (v string, err error) {
 // ResetName resets all changes to the "name" field.
 func (m *ClusterMutation) ResetName() {
 	m.name = nil
+}
+
+// SetClusterType sets the "cluster_type" field.
+func (m *ClusterMutation) SetClusterType(s string) {
+	m.cluster_type = &s
+}
+
+// ClusterType returns the value of the "cluster_type" field in the mutation.
+func (m *ClusterMutation) ClusterType() (r string, exists bool) {
+	v := m.cluster_type
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldClusterType returns the old "cluster_type" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldClusterType(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldClusterType is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldClusterType requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldClusterType: %w", err)
+	}
+	return oldValue.ClusterType, nil
+}
+
+// ResetClusterType resets all changes to the "cluster_type" field.
+func (m *ClusterMutation) ResetClusterType() {
+	m.cluster_type = nil
+}
+
+// SetClusterSpec sets the "cluster_spec" field.
+func (m *ClusterMutation) SetClusterSpec(s string) {
+	m.cluster_spec = &s
+}
+
+// ClusterSpec returns the value of the "cluster_spec" field in the mutation.
+func (m *ClusterMutation) ClusterSpec() (r string, exists bool) {
+	v := m.cluster_spec
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldClusterSpec returns the old "cluster_spec" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldClusterSpec(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldClusterSpec is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldClusterSpec requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldClusterSpec: %w", err)
+	}
+	return oldValue.ClusterSpec, nil
+}
+
+// ResetClusterSpec resets all changes to the "cluster_spec" field.
+func (m *ClusterMutation) ResetClusterSpec() {
+	m.cluster_spec = nil
+}
+
+// SetVersion sets the "version" field.
+func (m *ClusterMutation) SetVersion(s string) {
+	m.version = &s
+}
+
+// Version returns the value of the "version" field in the mutation.
+func (m *ClusterMutation) Version() (r string, exists bool) {
+	v := m.version
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVersion returns the old "version" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldVersion(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldVersion is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldVersion requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVersion: %w", err)
+	}
+	return oldValue.Version, nil
+}
+
+// ResetVersion resets all changes to the "version" field.
+func (m *ClusterMutation) ResetVersion() {
+	m.version = nil
+}
+
+// SetProfile sets the "profile" field.
+func (m *ClusterMutation) SetProfile(s string) {
+	m.profile = &s
+}
+
+// Profile returns the value of the "profile" field in the mutation.
+func (m *ClusterMutation) Profile() (r string, exists bool) {
+	v := m.profile
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldProfile returns the old "profile" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldProfile(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldProfile is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldProfile requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldProfile: %w", err)
+	}
+	return oldValue.Profile, nil
+}
+
+// ResetProfile resets all changes to the "profile" field.
+func (m *ClusterMutation) ResetProfile() {
+	m.profile = nil
+}
+
+// SetRegionID sets the "region_id" field.
+func (m *ClusterMutation) SetRegionID(s string) {
+	m.region_id = &s
+}
+
+// RegionID returns the value of the "region_id" field in the mutation.
+func (m *ClusterMutation) RegionID() (r string, exists bool) {
+	v := m.region_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldRegionID returns the old "region_id" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldRegionID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldRegionID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldRegionID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldRegionID: %w", err)
+	}
+	return oldValue.RegionID, nil
+}
+
+// ResetRegionID resets all changes to the "region_id" field.
+func (m *ClusterMutation) ResetRegionID() {
+	m.region_id = nil
+}
+
+// SetVpcID sets the "vpc_id" field.
+func (m *ClusterMutation) SetVpcID(s string) {
+	m.vpc_id = &s
+}
+
+// VpcID returns the value of the "vpc_id" field in the mutation.
+func (m *ClusterMutation) VpcID() (r string, exists bool) {
+	v := m.vpc_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldVpcID returns the old "vpc_id" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldVpcID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldVpcID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldVpcID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldVpcID: %w", err)
+	}
+	return oldValue.VpcID, nil
+}
+
+// ResetVpcID resets all changes to the "vpc_id" field.
+func (m *ClusterMutation) ResetVpcID() {
+	m.vpc_id = nil
+}
+
+// SetZoneID sets the "zone_id" field.
+func (m *ClusterMutation) SetZoneID(s string) {
+	m.zone_id = &s
+}
+
+// ZoneID returns the value of the "zone_id" field in the mutation.
+func (m *ClusterMutation) ZoneID() (r string, exists bool) {
+	v := m.zone_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldZoneID returns the old "zone_id" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldZoneID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldZoneID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldZoneID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldZoneID: %w", err)
+	}
+	return oldValue.ZoneID, nil
+}
+
+// ResetZoneID resets all changes to the "zone_id" field.
+func (m *ClusterMutation) ResetZoneID() {
+	m.zone_id = nil
+}
+
+// SetEnableDeletionProtection sets the "enable_deletion_protection" field.
+func (m *ClusterMutation) SetEnableDeletionProtection(b bool) {
+	m.enable_deletion_protection = &b
+}
+
+// EnableDeletionProtection returns the value of the "enable_deletion_protection" field in the mutation.
+func (m *ClusterMutation) EnableDeletionProtection() (r bool, exists bool) {
+	v := m.enable_deletion_protection
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldEnableDeletionProtection returns the old "enable_deletion_protection" field's value of the Cluster entity.
+// If the Cluster object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ClusterMutation) OldEnableDeletionProtection(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldEnableDeletionProtection is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldEnableDeletionProtection requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldEnableDeletionProtection: %w", err)
+	}
+	return oldValue.EnableDeletionProtection, nil
+}
+
+// ResetEnableDeletionProtection resets all changes to the "enable_deletion_protection" field.
+func (m *ClusterMutation) ResetEnableDeletionProtection() {
+	m.enable_deletion_protection = nil
 }
 
 // SetCreatedAt sets the "created_at" field.
@@ -248,9 +581,36 @@ func (m *ClusterMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ClusterMutation) Fields() []string {
-	fields := make([]string, 0, 3)
+	fields := make([]string, 0, 12)
+	if m.cluster_id != nil {
+		fields = append(fields, cluster.FieldClusterID)
+	}
 	if m.name != nil {
 		fields = append(fields, cluster.FieldName)
+	}
+	if m.cluster_type != nil {
+		fields = append(fields, cluster.FieldClusterType)
+	}
+	if m.cluster_spec != nil {
+		fields = append(fields, cluster.FieldClusterSpec)
+	}
+	if m.version != nil {
+		fields = append(fields, cluster.FieldVersion)
+	}
+	if m.profile != nil {
+		fields = append(fields, cluster.FieldProfile)
+	}
+	if m.region_id != nil {
+		fields = append(fields, cluster.FieldRegionID)
+	}
+	if m.vpc_id != nil {
+		fields = append(fields, cluster.FieldVpcID)
+	}
+	if m.zone_id != nil {
+		fields = append(fields, cluster.FieldZoneID)
+	}
+	if m.enable_deletion_protection != nil {
+		fields = append(fields, cluster.FieldEnableDeletionProtection)
 	}
 	if m.created_at != nil {
 		fields = append(fields, cluster.FieldCreatedAt)
@@ -266,8 +626,26 @@ func (m *ClusterMutation) Fields() []string {
 // schema.
 func (m *ClusterMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case cluster.FieldClusterID:
+		return m.ClusterID()
 	case cluster.FieldName:
 		return m.Name()
+	case cluster.FieldClusterType:
+		return m.ClusterType()
+	case cluster.FieldClusterSpec:
+		return m.ClusterSpec()
+	case cluster.FieldVersion:
+		return m.Version()
+	case cluster.FieldProfile:
+		return m.Profile()
+	case cluster.FieldRegionID:
+		return m.RegionID()
+	case cluster.FieldVpcID:
+		return m.VpcID()
+	case cluster.FieldZoneID:
+		return m.ZoneID()
+	case cluster.FieldEnableDeletionProtection:
+		return m.EnableDeletionProtection()
 	case cluster.FieldCreatedAt:
 		return m.CreatedAt()
 	case cluster.FieldUpdatedAt:
@@ -281,8 +659,26 @@ func (m *ClusterMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *ClusterMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case cluster.FieldClusterID:
+		return m.OldClusterID(ctx)
 	case cluster.FieldName:
 		return m.OldName(ctx)
+	case cluster.FieldClusterType:
+		return m.OldClusterType(ctx)
+	case cluster.FieldClusterSpec:
+		return m.OldClusterSpec(ctx)
+	case cluster.FieldVersion:
+		return m.OldVersion(ctx)
+	case cluster.FieldProfile:
+		return m.OldProfile(ctx)
+	case cluster.FieldRegionID:
+		return m.OldRegionID(ctx)
+	case cluster.FieldVpcID:
+		return m.OldVpcID(ctx)
+	case cluster.FieldZoneID:
+		return m.OldZoneID(ctx)
+	case cluster.FieldEnableDeletionProtection:
+		return m.OldEnableDeletionProtection(ctx)
 	case cluster.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case cluster.FieldUpdatedAt:
@@ -296,12 +692,75 @@ func (m *ClusterMutation) OldField(ctx context.Context, name string) (ent.Value,
 // type.
 func (m *ClusterMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case cluster.FieldClusterID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetClusterID(v)
+		return nil
 	case cluster.FieldName:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetName(v)
+		return nil
+	case cluster.FieldClusterType:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetClusterType(v)
+		return nil
+	case cluster.FieldClusterSpec:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetClusterSpec(v)
+		return nil
+	case cluster.FieldVersion:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVersion(v)
+		return nil
+	case cluster.FieldProfile:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetProfile(v)
+		return nil
+	case cluster.FieldRegionID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetRegionID(v)
+		return nil
+	case cluster.FieldVpcID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetVpcID(v)
+		return nil
+	case cluster.FieldZoneID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetZoneID(v)
+		return nil
+	case cluster.FieldEnableDeletionProtection:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetEnableDeletionProtection(v)
 		return nil
 	case cluster.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -366,8 +825,35 @@ func (m *ClusterMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *ClusterMutation) ResetField(name string) error {
 	switch name {
+	case cluster.FieldClusterID:
+		m.ResetClusterID()
+		return nil
 	case cluster.FieldName:
 		m.ResetName()
+		return nil
+	case cluster.FieldClusterType:
+		m.ResetClusterType()
+		return nil
+	case cluster.FieldClusterSpec:
+		m.ResetClusterSpec()
+		return nil
+	case cluster.FieldVersion:
+		m.ResetVersion()
+		return nil
+	case cluster.FieldProfile:
+		m.ResetProfile()
+		return nil
+	case cluster.FieldRegionID:
+		m.ResetRegionID()
+		return nil
+	case cluster.FieldVpcID:
+		m.ResetVpcID()
+		return nil
+	case cluster.FieldZoneID:
+		m.ResetZoneID()
+		return nil
+	case cluster.FieldEnableDeletionProtection:
+		m.ResetEnableDeletionProtection()
 		return nil
 	case cluster.FieldCreatedAt:
 		m.ResetCreatedAt()

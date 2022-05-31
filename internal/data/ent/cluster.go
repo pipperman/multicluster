@@ -16,8 +16,26 @@ type Cluster struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int64 `json:"id,omitempty"`
+	// ClusterID holds the value of the "cluster_id" field.
+	ClusterID string `json:"cluster_id,omitempty"`
 	// Name holds the value of the "name" field.
 	Name string `json:"name,omitempty"`
+	// ClusterType holds the value of the "cluster_type" field.
+	ClusterType string `json:"cluster_type,omitempty"`
+	// ClusterSpec holds the value of the "cluster_spec" field.
+	ClusterSpec string `json:"cluster_spec,omitempty"`
+	// Version holds the value of the "version" field.
+	Version string `json:"version,omitempty"`
+	// Profile holds the value of the "profile" field.
+	Profile string `json:"profile,omitempty"`
+	// RegionID holds the value of the "region_id" field.
+	RegionID string `json:"region_id,omitempty"`
+	// VpcID holds the value of the "vpc_id" field.
+	VpcID string `json:"vpc_id,omitempty"`
+	// ZoneID holds the value of the "zone_id" field.
+	ZoneID string `json:"zone_id,omitempty"`
+	// EnableDeletionProtection holds the value of the "enable_deletion_protection" field.
+	EnableDeletionProtection bool `json:"enable_deletion_protection,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -29,9 +47,11 @@ func (*Cluster) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
+		case cluster.FieldEnableDeletionProtection:
+			values[i] = new(sql.NullBool)
 		case cluster.FieldID:
 			values[i] = new(sql.NullInt64)
-		case cluster.FieldName:
+		case cluster.FieldClusterID, cluster.FieldName, cluster.FieldClusterType, cluster.FieldClusterSpec, cluster.FieldVersion, cluster.FieldProfile, cluster.FieldRegionID, cluster.FieldVpcID, cluster.FieldZoneID:
 			values[i] = new(sql.NullString)
 		case cluster.FieldCreatedAt, cluster.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
@@ -56,11 +76,65 @@ func (c *Cluster) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			c.ID = int64(value.Int64)
+		case cluster.FieldClusterID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field cluster_id", values[i])
+			} else if value.Valid {
+				c.ClusterID = value.String
+			}
 		case cluster.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
 				c.Name = value.String
+			}
+		case cluster.FieldClusterType:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field cluster_type", values[i])
+			} else if value.Valid {
+				c.ClusterType = value.String
+			}
+		case cluster.FieldClusterSpec:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field cluster_spec", values[i])
+			} else if value.Valid {
+				c.ClusterSpec = value.String
+			}
+		case cluster.FieldVersion:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field version", values[i])
+			} else if value.Valid {
+				c.Version = value.String
+			}
+		case cluster.FieldProfile:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field profile", values[i])
+			} else if value.Valid {
+				c.Profile = value.String
+			}
+		case cluster.FieldRegionID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field region_id", values[i])
+			} else if value.Valid {
+				c.RegionID = value.String
+			}
+		case cluster.FieldVpcID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field vpc_id", values[i])
+			} else if value.Valid {
+				c.VpcID = value.String
+			}
+		case cluster.FieldZoneID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field zone_id", values[i])
+			} else if value.Valid {
+				c.ZoneID = value.String
+			}
+		case cluster.FieldEnableDeletionProtection:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field enable_deletion_protection", values[i])
+			} else if value.Valid {
+				c.EnableDeletionProtection = value.Bool
 			}
 		case cluster.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -102,8 +176,26 @@ func (c *Cluster) String() string {
 	var builder strings.Builder
 	builder.WriteString("Cluster(")
 	builder.WriteString(fmt.Sprintf("id=%v", c.ID))
+	builder.WriteString(", cluster_id=")
+	builder.WriteString(c.ClusterID)
 	builder.WriteString(", name=")
 	builder.WriteString(c.Name)
+	builder.WriteString(", cluster_type=")
+	builder.WriteString(c.ClusterType)
+	builder.WriteString(", cluster_spec=")
+	builder.WriteString(c.ClusterSpec)
+	builder.WriteString(", version=")
+	builder.WriteString(c.Version)
+	builder.WriteString(", profile=")
+	builder.WriteString(c.Profile)
+	builder.WriteString(", region_id=")
+	builder.WriteString(c.RegionID)
+	builder.WriteString(", vpc_id=")
+	builder.WriteString(c.VpcID)
+	builder.WriteString(", zone_id=")
+	builder.WriteString(c.ZoneID)
+	builder.WriteString(", enable_deletion_protection=")
+	builder.WriteString(fmt.Sprintf("%v", c.EnableDeletionProtection))
 	builder.WriteString(", created_at=")
 	builder.WriteString(c.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", updated_at=")

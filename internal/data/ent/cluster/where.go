@@ -92,10 +92,73 @@ func IDLTE(id int64) predicate.Cluster {
 	})
 }
 
+// ClusterID applies equality check predicate on the "cluster_id" field. It's identical to ClusterIDEQ.
+func ClusterID(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterID), v))
+	})
+}
+
 // Name applies equality check predicate on the "name" field. It's identical to NameEQ.
 func Name(v string) predicate.Cluster {
 	return predicate.Cluster(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldName), v))
+	})
+}
+
+// ClusterType applies equality check predicate on the "cluster_type" field. It's identical to ClusterTypeEQ.
+func ClusterType(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterSpec applies equality check predicate on the "cluster_spec" field. It's identical to ClusterSpecEQ.
+func ClusterSpec(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterSpec), v))
+	})
+}
+
+// Version applies equality check predicate on the "version" field. It's identical to VersionEQ.
+func Version(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVersion), v))
+	})
+}
+
+// Profile applies equality check predicate on the "profile" field. It's identical to ProfileEQ.
+func Profile(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldProfile), v))
+	})
+}
+
+// RegionID applies equality check predicate on the "region_id" field. It's identical to RegionIDEQ.
+func RegionID(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRegionID), v))
+	})
+}
+
+// VpcID applies equality check predicate on the "vpc_id" field. It's identical to VpcIDEQ.
+func VpcID(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVpcID), v))
+	})
+}
+
+// ZoneID applies equality check predicate on the "zone_id" field. It's identical to ZoneIDEQ.
+func ZoneID(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldZoneID), v))
+	})
+}
+
+// EnableDeletionProtection applies equality check predicate on the "enable_deletion_protection" field. It's identical to EnableDeletionProtectionEQ.
+func EnableDeletionProtection(v bool) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEnableDeletionProtection), v))
 	})
 }
 
@@ -110,6 +173,117 @@ func CreatedAt(v time.Time) predicate.Cluster {
 func UpdatedAt(v time.Time) predicate.Cluster {
 	return predicate.Cluster(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// ClusterIDEQ applies the EQ predicate on the "cluster_id" field.
+func ClusterIDEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDNEQ applies the NEQ predicate on the "cluster_id" field.
+func ClusterIDNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDIn applies the In predicate on the "cluster_id" field.
+func ClusterIDIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldClusterID), v...))
+	})
+}
+
+// ClusterIDNotIn applies the NotIn predicate on the "cluster_id" field.
+func ClusterIDNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldClusterID), v...))
+	})
+}
+
+// ClusterIDGT applies the GT predicate on the "cluster_id" field.
+func ClusterIDGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDGTE applies the GTE predicate on the "cluster_id" field.
+func ClusterIDGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDLT applies the LT predicate on the "cluster_id" field.
+func ClusterIDLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDLTE applies the LTE predicate on the "cluster_id" field.
+func ClusterIDLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDContains applies the Contains predicate on the "cluster_id" field.
+func ClusterIDContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDHasPrefix applies the HasPrefix predicate on the "cluster_id" field.
+func ClusterIDHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDHasSuffix applies the HasSuffix predicate on the "cluster_id" field.
+func ClusterIDHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDEqualFold applies the EqualFold predicate on the "cluster_id" field.
+func ClusterIDEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldClusterID), v))
+	})
+}
+
+// ClusterIDContainsFold applies the ContainsFold predicate on the "cluster_id" field.
+func ClusterIDContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldClusterID), v))
 	})
 }
 
@@ -221,6 +395,797 @@ func NameEqualFold(v string) predicate.Cluster {
 func NameContainsFold(v string) predicate.Cluster {
 	return predicate.Cluster(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))
+	})
+}
+
+// ClusterTypeEQ applies the EQ predicate on the "cluster_type" field.
+func ClusterTypeEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeNEQ applies the NEQ predicate on the "cluster_type" field.
+func ClusterTypeNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeIn applies the In predicate on the "cluster_type" field.
+func ClusterTypeIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldClusterType), v...))
+	})
+}
+
+// ClusterTypeNotIn applies the NotIn predicate on the "cluster_type" field.
+func ClusterTypeNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldClusterType), v...))
+	})
+}
+
+// ClusterTypeGT applies the GT predicate on the "cluster_type" field.
+func ClusterTypeGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeGTE applies the GTE predicate on the "cluster_type" field.
+func ClusterTypeGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeLT applies the LT predicate on the "cluster_type" field.
+func ClusterTypeLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeLTE applies the LTE predicate on the "cluster_type" field.
+func ClusterTypeLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeContains applies the Contains predicate on the "cluster_type" field.
+func ClusterTypeContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeHasPrefix applies the HasPrefix predicate on the "cluster_type" field.
+func ClusterTypeHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeHasSuffix applies the HasSuffix predicate on the "cluster_type" field.
+func ClusterTypeHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeEqualFold applies the EqualFold predicate on the "cluster_type" field.
+func ClusterTypeEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterTypeContainsFold applies the ContainsFold predicate on the "cluster_type" field.
+func ClusterTypeContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldClusterType), v))
+	})
+}
+
+// ClusterSpecEQ applies the EQ predicate on the "cluster_spec" field.
+func ClusterSpecEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecNEQ applies the NEQ predicate on the "cluster_spec" field.
+func ClusterSpecNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecIn applies the In predicate on the "cluster_spec" field.
+func ClusterSpecIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldClusterSpec), v...))
+	})
+}
+
+// ClusterSpecNotIn applies the NotIn predicate on the "cluster_spec" field.
+func ClusterSpecNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldClusterSpec), v...))
+	})
+}
+
+// ClusterSpecGT applies the GT predicate on the "cluster_spec" field.
+func ClusterSpecGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecGTE applies the GTE predicate on the "cluster_spec" field.
+func ClusterSpecGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecLT applies the LT predicate on the "cluster_spec" field.
+func ClusterSpecLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecLTE applies the LTE predicate on the "cluster_spec" field.
+func ClusterSpecLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecContains applies the Contains predicate on the "cluster_spec" field.
+func ClusterSpecContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecHasPrefix applies the HasPrefix predicate on the "cluster_spec" field.
+func ClusterSpecHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecHasSuffix applies the HasSuffix predicate on the "cluster_spec" field.
+func ClusterSpecHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecEqualFold applies the EqualFold predicate on the "cluster_spec" field.
+func ClusterSpecEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldClusterSpec), v))
+	})
+}
+
+// ClusterSpecContainsFold applies the ContainsFold predicate on the "cluster_spec" field.
+func ClusterSpecContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldClusterSpec), v))
+	})
+}
+
+// VersionEQ applies the EQ predicate on the "version" field.
+func VersionEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVersion), v))
+	})
+}
+
+// VersionNEQ applies the NEQ predicate on the "version" field.
+func VersionNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldVersion), v))
+	})
+}
+
+// VersionIn applies the In predicate on the "version" field.
+func VersionIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldVersion), v...))
+	})
+}
+
+// VersionNotIn applies the NotIn predicate on the "version" field.
+func VersionNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldVersion), v...))
+	})
+}
+
+// VersionGT applies the GT predicate on the "version" field.
+func VersionGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldVersion), v))
+	})
+}
+
+// VersionGTE applies the GTE predicate on the "version" field.
+func VersionGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldVersion), v))
+	})
+}
+
+// VersionLT applies the LT predicate on the "version" field.
+func VersionLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldVersion), v))
+	})
+}
+
+// VersionLTE applies the LTE predicate on the "version" field.
+func VersionLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldVersion), v))
+	})
+}
+
+// VersionContains applies the Contains predicate on the "version" field.
+func VersionContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldVersion), v))
+	})
+}
+
+// VersionHasPrefix applies the HasPrefix predicate on the "version" field.
+func VersionHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldVersion), v))
+	})
+}
+
+// VersionHasSuffix applies the HasSuffix predicate on the "version" field.
+func VersionHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldVersion), v))
+	})
+}
+
+// VersionEqualFold applies the EqualFold predicate on the "version" field.
+func VersionEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldVersion), v))
+	})
+}
+
+// VersionContainsFold applies the ContainsFold predicate on the "version" field.
+func VersionContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldVersion), v))
+	})
+}
+
+// ProfileEQ applies the EQ predicate on the "profile" field.
+func ProfileEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileNEQ applies the NEQ predicate on the "profile" field.
+func ProfileNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileIn applies the In predicate on the "profile" field.
+func ProfileIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldProfile), v...))
+	})
+}
+
+// ProfileNotIn applies the NotIn predicate on the "profile" field.
+func ProfileNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldProfile), v...))
+	})
+}
+
+// ProfileGT applies the GT predicate on the "profile" field.
+func ProfileGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileGTE applies the GTE predicate on the "profile" field.
+func ProfileGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileLT applies the LT predicate on the "profile" field.
+func ProfileLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileLTE applies the LTE predicate on the "profile" field.
+func ProfileLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileContains applies the Contains predicate on the "profile" field.
+func ProfileContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileHasPrefix applies the HasPrefix predicate on the "profile" field.
+func ProfileHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileHasSuffix applies the HasSuffix predicate on the "profile" field.
+func ProfileHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileEqualFold applies the EqualFold predicate on the "profile" field.
+func ProfileEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldProfile), v))
+	})
+}
+
+// ProfileContainsFold applies the ContainsFold predicate on the "profile" field.
+func ProfileContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldProfile), v))
+	})
+}
+
+// RegionIDEQ applies the EQ predicate on the "region_id" field.
+func RegionIDEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDNEQ applies the NEQ predicate on the "region_id" field.
+func RegionIDNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDIn applies the In predicate on the "region_id" field.
+func RegionIDIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldRegionID), v...))
+	})
+}
+
+// RegionIDNotIn applies the NotIn predicate on the "region_id" field.
+func RegionIDNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldRegionID), v...))
+	})
+}
+
+// RegionIDGT applies the GT predicate on the "region_id" field.
+func RegionIDGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDGTE applies the GTE predicate on the "region_id" field.
+func RegionIDGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDLT applies the LT predicate on the "region_id" field.
+func RegionIDLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDLTE applies the LTE predicate on the "region_id" field.
+func RegionIDLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDContains applies the Contains predicate on the "region_id" field.
+func RegionIDContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDHasPrefix applies the HasPrefix predicate on the "region_id" field.
+func RegionIDHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDHasSuffix applies the HasSuffix predicate on the "region_id" field.
+func RegionIDHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDEqualFold applies the EqualFold predicate on the "region_id" field.
+func RegionIDEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldRegionID), v))
+	})
+}
+
+// RegionIDContainsFold applies the ContainsFold predicate on the "region_id" field.
+func RegionIDContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldRegionID), v))
+	})
+}
+
+// VpcIDEQ applies the EQ predicate on the "vpc_id" field.
+func VpcIDEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDNEQ applies the NEQ predicate on the "vpc_id" field.
+func VpcIDNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDIn applies the In predicate on the "vpc_id" field.
+func VpcIDIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldVpcID), v...))
+	})
+}
+
+// VpcIDNotIn applies the NotIn predicate on the "vpc_id" field.
+func VpcIDNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldVpcID), v...))
+	})
+}
+
+// VpcIDGT applies the GT predicate on the "vpc_id" field.
+func VpcIDGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDGTE applies the GTE predicate on the "vpc_id" field.
+func VpcIDGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDLT applies the LT predicate on the "vpc_id" field.
+func VpcIDLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDLTE applies the LTE predicate on the "vpc_id" field.
+func VpcIDLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDContains applies the Contains predicate on the "vpc_id" field.
+func VpcIDContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDHasPrefix applies the HasPrefix predicate on the "vpc_id" field.
+func VpcIDHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDHasSuffix applies the HasSuffix predicate on the "vpc_id" field.
+func VpcIDHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDEqualFold applies the EqualFold predicate on the "vpc_id" field.
+func VpcIDEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldVpcID), v))
+	})
+}
+
+// VpcIDContainsFold applies the ContainsFold predicate on the "vpc_id" field.
+func VpcIDContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldVpcID), v))
+	})
+}
+
+// ZoneIDEQ applies the EQ predicate on the "zone_id" field.
+func ZoneIDEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDNEQ applies the NEQ predicate on the "zone_id" field.
+func ZoneIDNEQ(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDIn applies the In predicate on the "zone_id" field.
+func ZoneIDIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldZoneID), v...))
+	})
+}
+
+// ZoneIDNotIn applies the NotIn predicate on the "zone_id" field.
+func ZoneIDNotIn(vs ...string) predicate.Cluster {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Cluster(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldZoneID), v...))
+	})
+}
+
+// ZoneIDGT applies the GT predicate on the "zone_id" field.
+func ZoneIDGT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDGTE applies the GTE predicate on the "zone_id" field.
+func ZoneIDGTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDLT applies the LT predicate on the "zone_id" field.
+func ZoneIDLT(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDLTE applies the LTE predicate on the "zone_id" field.
+func ZoneIDLTE(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDContains applies the Contains predicate on the "zone_id" field.
+func ZoneIDContains(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDHasPrefix applies the HasPrefix predicate on the "zone_id" field.
+func ZoneIDHasPrefix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDHasSuffix applies the HasSuffix predicate on the "zone_id" field.
+func ZoneIDHasSuffix(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDEqualFold applies the EqualFold predicate on the "zone_id" field.
+func ZoneIDEqualFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldZoneID), v))
+	})
+}
+
+// ZoneIDContainsFold applies the ContainsFold predicate on the "zone_id" field.
+func ZoneIDContainsFold(v string) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldZoneID), v))
+	})
+}
+
+// EnableDeletionProtectionEQ applies the EQ predicate on the "enable_deletion_protection" field.
+func EnableDeletionProtectionEQ(v bool) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldEnableDeletionProtection), v))
+	})
+}
+
+// EnableDeletionProtectionNEQ applies the NEQ predicate on the "enable_deletion_protection" field.
+func EnableDeletionProtectionNEQ(v bool) predicate.Cluster {
+	return predicate.Cluster(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldEnableDeletionProtection), v))
 	})
 }
 

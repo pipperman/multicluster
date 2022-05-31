@@ -19,7 +19,7 @@ type Component struct {
 	Config    string
 }
 
-type ListOptions struct {
+type ComponentListOptions struct {
 	ComponentType string
 }
 
@@ -27,7 +27,7 @@ type ListOptions struct {
 type ComponentRepo interface {
 	Config(context.Context, *Component) error
 	Get(context.Context, string) (*Component, error)
-	List(context.Context, int64, int64, *ListOptions) ([]*Component, error)
+	List(context.Context, int64, int64, *ComponentListOptions) ([]*Component, error)
 }
 
 // ClusterUsecase is a Cluster usecase.
@@ -52,7 +52,7 @@ func (comp *ComponentUsecase) GetComponent(ctx context.Context, componentId stri
 	return comp.repo.Get(ctx, componentId)
 }
 
-func (comp *ComponentUsecase) ListComponent(ctx context.Context, pageNum, pageSize int64, option *ListOptions) ([]*Component, error) {
+func (comp *ComponentUsecase) ListComponent(ctx context.Context, pageNum, pageSize int64, option *ComponentListOptions) ([]*Component, error) {
 	comp.log.WithContext(ctx).Infof("List Component")
 	return comp.repo.List(ctx, pageNum, pageSize, option)
 }

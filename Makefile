@@ -43,10 +43,6 @@ page:
 ent:
 	cd internal/data/ && ent generate ./ent/schema
 
-.PHONY: ent_init
-ent_init:
-	cd internal/data/ && ent init Component
-
 .PHONY: wire
 # generate wire
 wire:
