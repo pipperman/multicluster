@@ -10,6 +10,7 @@ import (
 	"multicluster/internal/data/ent/migrate"
 
 	"multicluster/internal/data/ent/cluster"
+	"multicluster/internal/data/ent/component"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -22,6 +23,8 @@ type Client struct {
 	Schema *migrate.Schema
 	// Cluster is the client for interacting with the Cluster builders.
 	Cluster *ClusterClient
+	// Component is the client for interacting with the Component builders.
+	Component *ComponentClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -36,6 +39,7 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Cluster = NewClusterClient(c.config)
+	c.Component = NewComponentClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -67,9 +71,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:     ctx,
-		config:  cfg,
-		Cluster: NewClusterClient(cfg),
+		ctx:       ctx,
+		config:    cfg,
+		Cluster:   NewClusterClient(cfg),
+		Component: NewComponentClient(cfg),
 	}, nil
 }
 
@@ -87,8 +92,9 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		config:  cfg,
-		Cluster: NewClusterClient(cfg),
+		config:    cfg,
+		Cluster:   NewClusterClient(cfg),
+		Component: NewComponentClient(cfg),
 	}, nil
 }
 
@@ -119,6 +125,7 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.Cluster.Use(hooks...)
+	c.Component.Use(hooks...)
 }
 
 // ClusterClient is a client for the Cluster schema.
@@ -209,4 +216,94 @@ func (c *ClusterClient) GetX(ctx context.Context, id int64) *Cluster {
 // Hooks returns the client hooks.
 func (c *ClusterClient) Hooks() []Hook {
 	return c.hooks.Cluster
+}
+
+// ComponentClient is a client for the Component schema.
+type ComponentClient struct {
+	config
+}
+
+// NewComponentClient returns a client for the Component from the given config.
+func NewComponentClient(c config) *ComponentClient {
+	return &ComponentClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `component.Hooks(f(g(h())))`.
+func (c *ComponentClient) Use(hooks ...Hook) {
+	c.hooks.Component = append(c.hooks.Component, hooks...)
+}
+
+// Create returns a create builder for Component.
+func (c *ComponentClient) Create() *ComponentCreate {
+	mutation := newComponentMutation(c.config, OpCreate)
+	return &ComponentCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Component entities.
+func (c *ComponentClient) CreateBulk(builders ...*ComponentCreate) *ComponentCreateBulk {
+	return &ComponentCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Component.
+func (c *ComponentClient) Update() *ComponentUpdate {
+	mutation := newComponentMutation(c.config, OpUpdate)
+	return &ComponentUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *ComponentClient) UpdateOne(co *Component) *ComponentUpdateOne {
+	mutation := newComponentMutation(c.config, OpUpdateOne, withComponent(co))
+	return &ComponentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *ComponentClient) UpdateOneID(id int) *ComponentUpdateOne {
+	mutation := newComponentMutation(c.config, OpUpdateOne, withComponentID(id))
+	return &ComponentUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Component.
+func (c *ComponentClient) Delete() *ComponentDelete {
+	mutation := newComponentMutation(c.config, OpDelete)
+	return &ComponentDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *ComponentClient) DeleteOne(co *Component) *ComponentDeleteOne {
+	return c.DeleteOneID(co.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *ComponentClient) DeleteOneID(id int) *ComponentDeleteOne {
+	builder := c.Delete().Where(component.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &ComponentDeleteOne{builder}
+}
+
+// Query returns a query builder for Component.
+func (c *ComponentClient) Query() *ComponentQuery {
+	return &ComponentQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Component entity by its id.
+func (c *ComponentClient) Get(ctx context.Context, id int) (*Component, error) {
+	return c.Query().Where(component.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *ComponentClient) GetX(ctx context.Context, id int) *Component {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// Hooks returns the client hooks.
+func (c *ComponentClient) Hooks() []Hook {
+	return c.hooks.Component
 }

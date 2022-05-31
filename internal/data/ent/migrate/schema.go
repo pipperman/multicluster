@@ -22,9 +22,21 @@ var (
 		PrimaryKey:  []*schema.Column{ClustersColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{},
 	}
+	// ComponentsColumns holds the columns for the "components" table.
+	ComponentsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+	}
+	// ComponentsTable holds the schema information for the "components" table.
+	ComponentsTable = &schema.Table{
+		Name:        "components",
+		Columns:     ComponentsColumns,
+		PrimaryKey:  []*schema.Column{ComponentsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		ClustersTable,
+		ComponentsTable,
 	}
 )
 

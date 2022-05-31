@@ -14,6 +14,8 @@ type Tx struct {
 	config
 	// Cluster is the client for interacting with the Cluster builders.
 	Cluster *ClusterClient
+	// Component is the client for interacting with the Component builders.
+	Component *ComponentClient
 
 	// lazily loaded.
 	client     *Client
@@ -150,6 +152,7 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Cluster = NewClusterClient(tx.config)
+	tx.Component = NewComponentClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"multicluster/internal/data/ent/cluster"
+	"multicluster/internal/data/ent/component"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
@@ -31,7 +32,8 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
-		cluster.Table: cluster.ValidColumn,
+		cluster.Table:   cluster.ValidColumn,
+		component.Table: component.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {
