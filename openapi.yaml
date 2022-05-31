@@ -343,6 +343,12 @@ components:
                     $ref: '#/components/schemas/ClusterCreateRequest_CreateOption'
                 name:
                     type: string
+                version:
+                    type: string
+                accountID:
+                    type: string
+                clusterSpec:
+                    type: string
         ClusterCreateRequest_CreateOption:
             type: object
             properties: {}

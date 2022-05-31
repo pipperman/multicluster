@@ -2,14 +2,17 @@ package service
 
 import (
 	"context"
-
 	v1 "multicluster/api/cluster/v1"
 	"multicluster/internal/biz"
+
+	"github.com/jinzhu/copier"
 )
 
 // CreateCluster implements multicluster.ClusterServer.
 func (s *MultiClusterService) CreateCluster(ctx context.Context, in *v1.ClusterCreateRequest) (*v1.ClusterCreateReply, error) {
-	c, err := s.cls.CreateCluster(ctx, &biz.Cluster{Name: in.Name}, &biz.ClusterCreateOption{})
+	cluster := &biz.Cluster{}
+	copier.Copy(cluster, in)
+	c, err := s.cls.CreateCluster(ctx, cluster, &biz.ClusterCreateOption{})
 	if err != nil {
 		return nil, err
 	}

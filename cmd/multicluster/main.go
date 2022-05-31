@@ -22,9 +22,9 @@ import (
 // go build -ldflags "-X main.Version=x.y.z"
 var (
 	// Name is the name of the compiled software.
-	Name string
+	Name = "srv.multicluster"
 	// Version is the version of the compiled software.
-	Version string
+	Version = "v0.0.1"
 	// flagconf is the config flag.
 	flagconf string
 

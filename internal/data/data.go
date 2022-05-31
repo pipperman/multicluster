@@ -8,6 +8,7 @@ import (
 	"multicluster/internal/conf"
 	"multicluster/internal/data/ent"
 	"multicluster/internal/data/ent/migrate"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 // ProviderSet is data providers.

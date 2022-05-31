@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package cluster.v1;
 
-import "api/cluster/v1/cluster.proto";
 import "google/api/annotations.proto";
 import "page/page.proto";
 
@@ -77,12 +76,12 @@ message ClusterRequest {
     message GetOption {
     }
     string cluster_id = 1;
-    optional GetOption option = 2;
+    GetOption option = 2;
 }
 
 message ClusterReply {
     ClusterMetadata metadata = 1;
-    optional ClusterDeployConfig config = 2;
+    ClusterDeployConfig config = 2;
 }
 
 message ClusterMetadata {
@@ -90,7 +89,7 @@ message ClusterMetadata {
     string name = 2;
     string version = 3;
     string cluster_type = 4;
-    optional string cluster_spec = 5;
+    string cluster_spec = 5;
     string region_id = 7;
     string vpc_id = 8;
     string account_id = 9;
@@ -140,7 +139,7 @@ message ClusterDeployConfig {
     repeated Taints taints = 12;
     CloudSystemDisk cloud_system_disk = 13;
     CloudDataDisk cloud_data_disk = 14;
-    optional ControlPlane control_plane = 15;
+    ControlPlane control_plane = 15;
     repeated Machine machine = 16;
     ClusterDeployOption option = 17;
 }
@@ -157,7 +156,7 @@ message Machine {
     }
     int64 cpu = 1;
     int64 memory = 2;
-    optional Image image = 3;
+    Image image = 3;
 }
 
 // ClusterDeployOption
@@ -189,6 +188,9 @@ message ClusterCreateRequest {
     }
     CreateOption option = 1;
     string name = 2;
+    string version =3;
+    string accountID=4;
+    string cluster_spec=5;
 }
 
 message ClusterCreateReply {

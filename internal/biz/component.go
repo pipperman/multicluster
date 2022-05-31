@@ -36,6 +36,7 @@ type ComponentUsecase struct {
 	log  *log.Helper
 }
 
+
 // NewComponentUsecase new a Component usecase.
 func NewComponentUsecase(repo ComponentRepo, logger log.Logger) *ComponentUsecase {
 	return &ComponentUsecase{repo: repo, log: log.NewHelper(logger)}

@@ -29,7 +29,7 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger, tr
 	clusterUsecase := biz.NewClusterUsecase(clusterRepo, logger)
 	componentRepo := data.NewComponentRepo(dataData, logger)
 	componentUsecase := biz.NewComponentUsecase(componentRepo, logger)
-	multiClusterService := service.NewMultiClusterService(clusterUsecase, componentUsecase)
+	multiClusterService := service.NewMultiClusterService(clusterUsecase, componentUsecase, logger)
 	httpServer := server.NewHTTPServer(confServer, multiClusterService, logger)
 	grpcServer := server.NewGRPCServer(confServer, multiClusterService, logger)
 	app := newApp(logger, httpServer, grpcServer)

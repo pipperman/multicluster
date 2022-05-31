@@ -29,6 +29,6 @@ func (r *componentRepo) Get(context.Context, string) (*biz.Component, error) {
 	return nil, nil
 }
 
-func (r *componentRepo) List(ctx context.Context, pageNum, pageSize int64, options *biz.ListOptions) ([]*biz.Component, error) {
+func (r *componentRepo) List(ctx context.Context, pageNum, pageSize int64, options *biz.ComponentListOptions) ([]*biz.Component, error) {
 	return nil, nil
 }

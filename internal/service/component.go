@@ -27,7 +27,7 @@ func (s *MultiClusterService) GetComponent(ctx context.Context, in *v1.Component
 
 // ListComponent implements multicluster.ClusterServer.
 func (s *MultiClusterService) ListComponent(ctx context.Context, in *v1.ComponentListRequest) (*v1.ComponentListReply, error) {
-	_, err := s.comp.ListComponent(ctx, in.PageInfo.PageNum, in.PageInfo.PageSize, &biz.ListOptions{
+	_, err := s.comp.ListComponent(ctx, in.PageInfo.PageNum, in.PageInfo.PageSize, &biz.ComponentListOptions{
 		ComponentType: in.Option.ComponentType,
 	})
 	if err != nil {

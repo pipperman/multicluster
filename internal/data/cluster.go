@@ -2,9 +2,11 @@ package data
 
 import (
 	"context"
-	"github.com/go-kratos/kratos/v2/log"
 	"multicluster/internal/biz"
 	"multicluster/internal/data/ent/cluster"
+
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/google/uuid"
 )
 
 var _ biz.ClusterRepo = (*clusterRepo)(nil)
@@ -23,7 +25,17 @@ func NewClusterRepo(data *Data, logger log.Logger) biz.ClusterRepo {
 }
 
 func (r *clusterRepo) Create(ctx context.Context, c *biz.Cluster, option *biz.ClusterCreateOption) (*biz.Cluster, error) {
-	item, err := r.data.db.Cluster.Create().SetName(c.Name).Save(ctx)
+	item, err := r.data.db.Cluster.Create().
+	SetName(c.Name).
+	SetClusterSpec(c.ClusterSpec).
+	SetClusterType("managed").
+	SetVpcID("1c1101223").
+	SetZoneID("232323").
+	SetClusterID(uuid.New().String()).
+	SetVersion(c.Version).
+	SetRegionID("1c00033").
+	SetEnableDeletionProtection(true).
+	Save(ctx)
 	if err != nil {
 		return nil, err
 	}
