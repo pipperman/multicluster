@@ -20,22 +20,22 @@ type clusterRepo struct {
 func NewClusterRepo(data *Data, logger log.Logger) biz.ClusterRepo {
 	return &clusterRepo{
 		data: data,
-		log:  log.NewHelper(logger),
+		log:  log.NewHelper(log.With(logger, "module", "repo/cluster")),
 	}
 }
 
 func (r *clusterRepo) Create(ctx context.Context, c *biz.Cluster, option *biz.ClusterCreateOption) (*biz.Cluster, error) {
 	item, err := r.data.db.Cluster.Create().
-	SetName(c.Name).
-	SetClusterSpec(c.ClusterSpec).
-	SetClusterType("managed").
-	SetVpcID("1c1101223").
-	SetZoneID("232323").
-	SetClusterID(uuid.New().String()).
-	SetVersion(c.Version).
-	SetRegionID("1c00033").
-	SetEnableDeletionProtection(true).
-	Save(ctx)
+		SetName(c.Name).
+		SetClusterSpec(c.ClusterSpec).
+		SetClusterType("managed").
+		SetVpcID("1c1101223").
+		SetZoneID("232323").
+		SetClusterID(uuid.New().String()).
+		SetVersion(c.Version).
+		SetRegionID("1c00033").
+		SetEnableDeletionProtection(true).
+		Save(ctx)
 	if err != nil {
 		return nil, err
 	}

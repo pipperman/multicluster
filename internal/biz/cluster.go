@@ -79,12 +79,12 @@ type ClusterUsecase struct {
 
 // NewClusterUsecase new a Cluster usecase.
 func NewClusterUsecase(repo ClusterRepo, logger log.Logger) *ClusterUsecase {
-	return &ClusterUsecase{repo: repo, log: log.NewHelper(logger)}
+	return &ClusterUsecase{repo: repo, log: log.NewHelper(log.With(logger, "module", "usecase/cluster"))}
 }
 
 // CreateCluster creates a Cluster, and returns the new Cluster.
 func (uc *ClusterUsecase) CreateCluster(ctx context.Context, c *Cluster, option *ClusterCreateOption) (*Cluster, error) {
-	uc.log.WithContext(ctx).Infof("Create Cluster: %v", c.ClusterId)
+	uc.log.WithContext(ctx).Infof("Create Cluster: %v", c.Name)
 	return uc.repo.Create(ctx, c, option)
 }
 

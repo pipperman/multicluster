@@ -36,7 +36,6 @@ type ComponentUsecase struct {
 	log  *log.Helper
 }
 
-
 // NewComponentUsecase new a Component usecase.
 func NewComponentUsecase(repo ComponentRepo, logger log.Logger) *ComponentUsecase {
 	return &ComponentUsecase{repo: repo, log: log.NewHelper(logger)}
@@ -44,7 +43,7 @@ func NewComponentUsecase(repo ComponentRepo, logger log.Logger) *ComponentUsecas
 
 // CreateCluster creates a Cluster, and returns the new Cluster.
 func (comp *ComponentUsecase) Config(ctx context.Context, c *Component) error {
-	comp.log.WithContext(ctx).Infof("Create Cluster: %v", c.ClusterId)
+	comp.log.WithContext(ctx).Infof("Config Component: %v", c.ClusterId)
 	return comp.repo.Config(ctx, c)
 }
 
