@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package cluster.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "multicluster/api/diagnosis/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.cluster.v1";
+option java_outer_classname = "DiagnosisProtoV1";

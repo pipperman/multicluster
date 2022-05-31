@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package cluster.v1;
+
+option go_package = "multicluster/api/cluster/v1;v1";
+option java_multiple_files = true;
+option java_package = "cluster.v1";
+option objc_class_prefix = "APIClusterV1";
+
+enum ErrorReason {
+    CLUSTER_TYPE_UNSPECIFIED = 0;
+    CLUSTER_NOT_FOUND = 1;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package component.v1;
+
+option go_package = "multicluster/api/component/v1;v1";
+option java_multiple_files = true;
+option java_package = "component.v1";
+option objc_class_prefix = "APIComponentV1";
+
+enum ErrorReason {
+    COMPONENT_TYPE_UNSPECIFIED = 0;
+    COMPONENT_NOT_FOUND = 1;
+}

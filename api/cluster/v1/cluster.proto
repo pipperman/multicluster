@@ -1,0 +1,254 @@
+syntax = "proto3";
+
+package cluster.v1;
+
+import "api/cluster/v1/cluster.proto";
+import "google/api/annotations.proto";
+import "page/page.proto";
+
+option go_package = "multicluster/api/cluster/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.cluster.v1";
+option java_outer_classname = "ClusterProtoV1";
+
+// The cluster service definition.
+service Cluster {
+    // get cluster info
+    rpc GetCluster (ClusterRequest) returns (ClusterReply) {
+        option (google.api.http) = {
+            get: "/api/v1/clusters/{cluster_id}"
+        };
+    }
+    // list cluster metadata
+    rpc ListCluster (ClusterListRequest) returns (ClusterListReply) {
+        option (google.api.http) = {
+            get: "/api/v1/clusters"
+        };
+    }
+    // create cluster
+    rpc CreateCluster (ClusterCreateRequest) returns (ClusterCreateReply) {
+        option (google.api.http) = {
+            post: "/api/v1/clusters",
+            body: "*"
+        };
+    }
+    // update cluster
+    rpc UpdateCluster (ClusterUpdateRequest) returns (ClusterUpdateReply) {
+        option (google.api.http) = {
+            put: "/api/v1/clusters",
+            body: "*"
+        };
+    }
+    // delete cluster with clusterID
+    rpc DeleteCluster (ClusterDeleteRequest) returns (ClusterDeleteReply) {
+        option (google.api.http) = {
+            delete: "/api/v1/clusters/{cluster_id}",
+        };
+    }
+    // managed external cluster
+    rpc ManagedCluster (ClusterManagedRequest) returns (ClusterManagedReply) {
+        option (google.api.http) = {
+            post: "/api/v1/clusters/managed",
+            body: "*"
+        };
+    }
+    // log cluster with clusterID
+    rpc LogCluster (ClusterLogRequest) returns (ClusterLogReply) {
+        option (google.api.http) = {
+            get: "/api/v1/clusters/{cluster_id}/log",
+        };
+    }
+    // watch cluster with clusterID
+    rpc WatchCluster (ClusterWatchRequest) returns (stream ClusterWatchReply) {
+        option (google.api.http) = {
+            post: "/api/v1/clusters/{cluster_id}/watch",
+        };
+    }
+    // compare difference between current version and last version of clusters
+    rpc CompareCluster (ClusterCompareRequest) returns (ClusterCompareReply) {
+        option (google.api.http) = {
+            post: "/api/v1/clusters/{cluster_id}/compare",
+            body: "*"
+        };
+    }
+}
+
+message ClusterRequest {
+    message GetOption {
+    }
+    string cluster_id = 1;
+    optional GetOption option = 2;
+}
+
+message ClusterReply {
+    ClusterMetadata metadata = 1;
+    optional ClusterDeployConfig config = 2;
+}
+
+message ClusterMetadata {
+    string cluster_id = 1;
+    string name = 2;
+    string version = 3;
+    string cluster_type = 4;
+    optional string cluster_spec = 5;
+    string region_id = 7;
+    string vpc_id = 8;
+    string account_id = 9;
+    string cloud_provider = 10;
+    string cloud_type = 11;
+    int64 worker_count = 12;
+    string status = 16;
+}
+
+message ClusterDeployConfig {
+    message Addons {
+        string name = 1;
+        string config = 2;
+        bool disabled = 3;
+    }
+    // control plane taints
+    message Taints {
+        string key = 1;
+        string value = 2;
+        string effect = 3;
+    }
+    message Runtime {
+        string name = 1;
+        string version = 2;
+    }
+    message CloudSystemDisk {
+        string category = 1;
+        int64 size = 2;
+    }
+    message CloudDataDisk {
+        string category = 1;
+        int64 size = 2;
+        bool format_disk = 3;
+    }
+
+    string cluster_id = 1;
+    string pod_cidr = 2;
+    string service_cidr = 3;
+    string proxy_mode = 4;
+    string cluster_domain = 5;
+    string custom_san = 6;
+    string master_url = 7;
+    string timezone = 8;
+    Runtime runtime = 9;
+    map< string, string > tags = 10;
+    repeated Addons addons = 11;
+    repeated Taints taints = 12;
+    CloudSystemDisk cloud_system_disk = 13;
+    CloudDataDisk cloud_data_disk = 14;
+    optional ControlPlane control_plane = 15;
+    repeated Machine machine = 16;
+    ClusterDeployOption option = 17;
+}
+
+message ControlPlane {
+    Machine machine = 1;
+}
+
+// Machine
+message Machine {
+    message Image {
+        string os_platform = 1;
+        string image_id = 2;
+    }
+    int64 cpu = 1;
+    int64 memory = 2;
+    optional Image image = 3;
+}
+
+// ClusterDeployOption
+message ClusterDeployOption {
+    bool enable_api_audit = 1;
+    bool enable_public_access = 2;
+    bool enable_cloud_monitor = 3;
+    bool enable_cloud_log = 4;
+    bool enable_deletion_protection = 5;
+    bool worker_auto_renew = 6;
+}
+
+message ClusterListRequest {
+    message ListOption {
+
+    }
+    ListOption list_option = 1;
+    page.PageInfo page_info = 2;
+}
+
+message ClusterListReply {
+    repeated ClusterMetadata Items = 1;
+    page.PageInfo page_info = 2;
+}
+
+message ClusterCreateRequest {
+    message CreateOption {
+
+    }
+    CreateOption option = 1;
+    string name = 2;
+}
+
+message ClusterCreateReply {
+    string cluster_id = 1;
+    string order_id = 2;
+    string task_id = 3;
+}
+
+message ClusterUpdateRequest {
+    string cluster_id = 1;
+}
+
+message ClusterUpdateReply {
+    string cluster_id = 1;
+    string order_id = 2;
+    string task_id = 3;
+}
+
+message ClusterDeleteRequest {
+    message DeleteOption {
+
+    }
+    string cluster_id = 1;
+    DeleteOption option = 2;
+}
+
+message ClusterDeleteReply {
+    string cluster_id = 1;
+    string order_id = 2;
+    string task_id = 3;
+}
+
+message ClusterManagedRequest {
+
+}
+
+message ClusterManagedReply {
+
+}
+
+message ClusterLogRequest {
+    string cluster_id = 1;
+}
+
+message ClusterLogReply {
+
+}
+
+message ClusterWatchRequest {
+    string cluster_id = 1;
+}
+
+message ClusterWatchReply {
+
+}
+
+message ClusterCompareRequest {
+    string cluster_id = 1;
+}
+
+message ClusterCompareReply {
+
+}

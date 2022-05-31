@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package cluster.v1;
+
+import "google/api/annotations.proto";
+import "page/page.proto";
+
+option go_package = "multicluster/api/component/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.cluster.v1";
+option java_outer_classname = "ComponentProtoV1";
+
+service Component {
+
+    rpc Config(ComponentRequest) returns (ComponentConfigReply) {
+        option (google.api.http) = {
+            put: "/api/v1/{cluster_id}/components/config"
+            body: "*"
+        };
+    }
+    rpc GetComponent(ComponentRequest) returns (ComponentReply) {
+        option (google.api.http) = {
+            get: "/api/v1/{cluster_id}/components"
+        };
+    }
+    rpc ListComponent(ComponentListRequest) returns (ComponentListReply) {
+        option (google.api.http) = {
+            get: "/api/v1/{cluster_id}/components"
+        };
+    }
+}
+
+message ComponentRequest {
+    string cluster_id = 1;
+    string component_id = 2;
+}
+
+message ComponentReply {
+    string cluster_id = 1;
+    ComponentMetadata component = 2;
+}
+
+message ComponentConfigReply {
+
+}
+
+message ComponentListRequest {
+    message ListOption {
+        string component_type = 2;
+    }
+    string cluster_id = 1;
+    page.PageInfo page_info = 2;
+    ListOption option = 3;
+}
+
+message ComponentMetadata {
+    string name = 1;
+    string config = 2;
+}
+
+message ComponentListReply {
+    string cluster_id = 1;
+    repeated ComponentMetadata components = 2;
+    page.PageInfo page_info = 3;
+}
