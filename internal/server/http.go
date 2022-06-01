@@ -4,8 +4,11 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
+	"go.opentelemetry.io/otel"
+	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 
 	cluster "multicluster/api/cluster/v1"
 	component "multicluster/api/component/v1"
@@ -14,10 +17,12 @@ import (
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, cls *service.MultiClusterService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, cls *service.MultiClusterService, logger log.Logger,tp *tracesdk.TracerProvider) *http.Server {
+	otel.SetTracerProvider(tp)
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			tracing.Server(),
 			logging.Server(logger),
 		),
 	}
@@ -30,6 +35,7 @@ func NewHTTPServer(c *conf.Server, cls *service.MultiClusterService, logger log.
 	if c.Http.Timeout != nil {
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
+	//otel.SetTracerProvider(tp)
 	srv := http.NewServer(opts...)
 	openAPIhandler := openapiv2.NewHandler()
 	srv.HandlePrefix("/q/", openAPIhandler)
