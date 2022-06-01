@@ -22,6 +22,10 @@ func init() {
 	clusterDescProfile := clusterFields[6].Descriptor()
 	// cluster.DefaultProfile holds the default value on creation for the profile field.
 	cluster.DefaultProfile = clusterDescProfile.Default.(string)
+	// clusterDescEnableDeletionProtection is the schema descriptor for enable_deletion_protection field.
+	clusterDescEnableDeletionProtection := clusterFields[10].Descriptor()
+	// cluster.DefaultEnableDeletionProtection holds the default value on creation for the enable_deletion_protection field.
+	cluster.DefaultEnableDeletionProtection = clusterDescEnableDeletionProtection.Default.(bool)
 	// clusterDescCreatedAt is the schema descriptor for created_at field.
 	clusterDescCreatedAt := clusterFields[11].Descriptor()
 	// cluster.DefaultCreatedAt holds the default value on creation for the created_at field.

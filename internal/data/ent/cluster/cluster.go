@@ -71,6 +71,8 @@ var (
 	DefaultClusterType string
 	// DefaultProfile holds the default value on creation for the "profile" field.
 	DefaultProfile string
+	// DefaultEnableDeletionProtection holds the default value on creation for the "enable_deletion_protection" field.
+	DefaultEnableDeletionProtection bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.

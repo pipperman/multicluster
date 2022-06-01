@@ -96,6 +96,14 @@ func (cc *ClusterCreate) SetEnableDeletionProtection(b bool) *ClusterCreate {
 	return cc
 }
 
+// SetNillableEnableDeletionProtection sets the "enable_deletion_protection" field if the given value is not nil.
+func (cc *ClusterCreate) SetNillableEnableDeletionProtection(b *bool) *ClusterCreate {
+	if b != nil {
+		cc.SetEnableDeletionProtection(*b)
+	}
+	return cc
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (cc *ClusterCreate) SetCreatedAt(t time.Time) *ClusterCreate {
 	cc.mutation.SetCreatedAt(t)
@@ -189,6 +197,10 @@ func (cc *ClusterCreate) defaults() {
 	if _, ok := cc.mutation.Profile(); !ok {
 		v := cluster.DefaultProfile
 		cc.mutation.SetProfile(v)
+	}
+	if _, ok := cc.mutation.EnableDeletionProtection(); !ok {
+		v := cluster.DefaultEnableDeletionProtection
+		cc.mutation.SetEnableDeletionProtection(v)
 	}
 	if _, ok := cc.mutation.CreatedAt(); !ok {
 		v := cluster.DefaultCreatedAt()

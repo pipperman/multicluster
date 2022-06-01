@@ -103,6 +103,14 @@ func (cu *ClusterUpdate) SetEnableDeletionProtection(b bool) *ClusterUpdate {
 	return cu
 }
 
+// SetNillableEnableDeletionProtection sets the "enable_deletion_protection" field if the given value is not nil.
+func (cu *ClusterUpdate) SetNillableEnableDeletionProtection(b *bool) *ClusterUpdate {
+	if b != nil {
+		cu.SetEnableDeletionProtection(*b)
+	}
+	return cu
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (cu *ClusterUpdate) SetCreatedAt(t time.Time) *ClusterUpdate {
 	cu.mutation.SetCreatedAt(t)
@@ -381,6 +389,14 @@ func (cuo *ClusterUpdateOne) SetZoneID(s string) *ClusterUpdateOne {
 // SetEnableDeletionProtection sets the "enable_deletion_protection" field.
 func (cuo *ClusterUpdateOne) SetEnableDeletionProtection(b bool) *ClusterUpdateOne {
 	cuo.mutation.SetEnableDeletionProtection(b)
+	return cuo
+}
+
+// SetNillableEnableDeletionProtection sets the "enable_deletion_protection" field if the given value is not nil.
+func (cuo *ClusterUpdateOne) SetNillableEnableDeletionProtection(b *bool) *ClusterUpdateOne {
+	if b != nil {
+		cuo.SetEnableDeletionProtection(*b)
+	}
 	return cuo
 }
 

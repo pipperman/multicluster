@@ -5,6 +5,641 @@ openapi: 3.0.3
 info:
     title: ""
     version: 0.0.1
-paths: {}
+paths:
+    /api/v1/clusters:
+        get:
+            tags:
+                - Cluster
+            description: list cluster metadata
+            operationId: Cluster_ListCluster
+            parameters:
+                - name: pageInfo.pageNum
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: pageInfo.pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: pageInfo.total
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterListReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - Cluster
+            description: update cluster
+            operationId: Cluster_UpdateCluster
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ClusterUpdateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterUpdateReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        post:
+            tags:
+                - Cluster
+            description: create cluster
+            operationId: Cluster_CreateCluster
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ClusterCreateRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterCreateReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/clusters/managed:
+        post:
+            tags:
+                - Cluster
+            description: managed external cluster
+            operationId: Cluster_ManagedCluster
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ClusterManagedRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterManagedReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/clusters/{clusterId}:
+        get:
+            tags:
+                - Cluster
+            description: get cluster info
+            operationId: Cluster_GetCluster
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - Cluster
+            description: delete cluster with clusterID
+            operationId: Cluster_DeleteCluster
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterDeleteReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/clusters/{clusterId}/compare:
+        post:
+            tags:
+                - Cluster
+            description: compare difference between current version and last version of clusters
+            operationId: Cluster_CompareCluster
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ClusterCompareRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterCompareReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/clusters/{clusterId}/log:
+        get:
+            tags:
+                - Cluster
+            description: log cluster with clusterID
+            operationId: Cluster_LogCluster
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterLogReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/clusters/{clusterId}/watch:
+        post:
+            tags:
+                - Cluster
+            description: watch cluster with clusterID
+            operationId: Cluster_WatchCluster
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ClusterWatchReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/{clusterId}/components:
+        get:
+            tags:
+                - Component
+            operationId: Component_ListComponent
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: pageInfo.pageNum
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: pageInfo.pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: pageInfo.total
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: option.componentType
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ComponentListReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/v1/{clusterId}/components/config:
+        put:
+            tags:
+                - Component
+            operationId: Component_Config
+            parameters:
+                - name: clusterId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ComponentRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ComponentConfigReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
 components:
-    schemas: {}
+    schemas:
+        ClusterCompareReply:
+            type: object
+            properties: {}
+        ClusterCompareRequest:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+        ClusterCreateReply:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                orderId:
+                    type: string
+                taskId:
+                    type: string
+        ClusterCreateRequest:
+            type: object
+            properties:
+                option:
+                    $ref: '#/components/schemas/ClusterCreateRequest_CreateOption'
+                name:
+                    type: string
+                version:
+                    type: string
+                accountId:
+                    type: string
+                clusterType:
+                    type: string
+                clusterSpec:
+                    type: string
+                regionId:
+                    type: string
+                vpcId:
+                    type: string
+                zoneId:
+                    type: string
+        ClusterCreateRequest_CreateOption:
+            type: object
+            properties: {}
+        ClusterDeleteReply:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                orderId:
+                    type: string
+                taskId:
+                    type: string
+        ClusterDeployConfig:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                podCidr:
+                    type: string
+                serviceCidr:
+                    type: string
+                proxyMode:
+                    type: string
+                clusterDomain:
+                    type: string
+                customSan:
+                    type: string
+                masterUrl:
+                    type: string
+                timezone:
+                    type: string
+                runtime:
+                    $ref: '#/components/schemas/ClusterDeployConfig_Runtime'
+                tags:
+                    type: object
+                    additionalProperties:
+                        type: string
+                addons:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ClusterDeployConfig_Addons'
+                taints:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ClusterDeployConfig_Taints'
+                cloudSystemDisk:
+                    $ref: '#/components/schemas/ClusterDeployConfig_CloudSystemDisk'
+                cloudDataDisk:
+                    $ref: '#/components/schemas/ClusterDeployConfig_CloudDataDisk'
+                controlPlane:
+                    $ref: '#/components/schemas/ControlPlane'
+                machine:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Machine'
+                option:
+                    $ref: '#/components/schemas/ClusterDeployOption'
+        ClusterDeployConfig_Addons:
+            type: object
+            properties:
+                name:
+                    type: string
+                config:
+                    type: string
+                disabled:
+                    type: boolean
+        ClusterDeployConfig_CloudDataDisk:
+            type: object
+            properties:
+                category:
+                    type: string
+                size:
+                    type: integer
+                    format: int64
+                formatDisk:
+                    type: boolean
+        ClusterDeployConfig_CloudSystemDisk:
+            type: object
+            properties:
+                category:
+                    type: string
+                size:
+                    type: integer
+                    format: int64
+        ClusterDeployConfig_Runtime:
+            type: object
+            properties:
+                name:
+                    type: string
+                version:
+                    type: string
+        ClusterDeployConfig_Taints:
+            type: object
+            properties:
+                key:
+                    type: string
+                value:
+                    type: string
+                effect:
+                    type: string
+            description: control plane taints
+        ClusterDeployOption:
+            type: object
+            properties:
+                enableApiAudit:
+                    type: boolean
+                enablePublicAccess:
+                    type: boolean
+                enableCloudMonitor:
+                    type: boolean
+                enableCloudLog:
+                    type: boolean
+                enableDeletionProtection:
+                    type: boolean
+                workerAutoRenew:
+                    type: boolean
+            description: ClusterDeployOption
+        ClusterListReply:
+            type: object
+            properties:
+                Items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ClusterMetadata'
+                pageInfo:
+                    $ref: '#/components/schemas/PageInfo'
+        ClusterLogReply:
+            type: object
+            properties: {}
+        ClusterManagedReply:
+            type: object
+            properties: {}
+        ClusterManagedRequest:
+            type: object
+            properties: {}
+        ClusterMetadata:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                name:
+                    type: string
+                version:
+                    type: string
+                clusterType:
+                    type: string
+                clusterSpec:
+                    type: string
+                regionId:
+                    type: string
+                vpcId:
+                    type: string
+                accountId:
+                    type: string
+                cloudProvider:
+                    type: string
+                cloudType:
+                    type: string
+                workerCount:
+                    type: integer
+                    format: int64
+                status:
+                    type: string
+        ClusterReply:
+            type: object
+            properties:
+                metadata:
+                    $ref: '#/components/schemas/ClusterMetadata'
+                config:
+                    $ref: '#/components/schemas/ClusterDeployConfig'
+        ClusterUpdateReply:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                orderId:
+                    type: string
+                taskId:
+                    type: string
+        ClusterUpdateRequest:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+        ClusterWatchReply:
+            type: object
+            properties: {}
+        ComponentConfigReply:
+            type: object
+            properties: {}
+        ComponentListReply:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                components:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ComponentMetadata'
+                pageInfo:
+                    $ref: '#/components/schemas/PageInfo'
+        ComponentMetadata:
+            type: object
+            properties:
+                name:
+                    type: string
+                config:
+                    type: string
+        ComponentReply:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                component:
+                    $ref: '#/components/schemas/ComponentMetadata'
+        ComponentRequest:
+            type: object
+            properties:
+                clusterId:
+                    type: string
+                componentId:
+                    type: string
+        ControlPlane:
+            type: object
+            properties:
+                machine:
+                    $ref: '#/components/schemas/Machine'
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        Machine:
+            type: object
+            properties:
+                cpu:
+                    type: integer
+                    format: int64
+                memory:
+                    type: integer
+                    format: int64
+                image:
+                    $ref: '#/components/schemas/Machine_Image'
+            description: Machine
+        Machine_Image:
+            type: object
+            properties:
+                osPlatform:
+                    type: string
+                imageId:
+                    type: string
+        PageInfo:
+            type: object
+            properties:
+                pageNum:
+                    type: integer
+                    format: int64
+                pageSize:
+                    type: integer
+                    format: int64
+                total:
+                    type: integer
+                    format: int64
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+tags:
+    - name: Cluster
+      description: The cluster service definition.
+    - name: Component

@@ -20,7 +20,7 @@ var (
 		{Name: "region_id", Type: field.TypeString},
 		{Name: "vpc_id", Type: field.TypeString},
 		{Name: "zone_id", Type: field.TypeString},
-		{Name: "enable_deletion_protection", Type: field.TypeBool},
+		{Name: "enable_deletion_protection", Type: field.TypeBool, Default: true},
 		{Name: "created_at", Type: field.TypeTime, SchemaType: map[string]string{"mysql": "datetime"}},
 		{Name: "updated_at", Type: field.TypeTime, SchemaType: map[string]string{"mysql": "datetime"}},
 	}
