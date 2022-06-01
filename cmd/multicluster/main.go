@@ -4,6 +4,7 @@ import (
 	"flag"
 	"os"
 
+	"multicluster/internal/conf"
 	"github.com/go-kratos/kratos/v2"
 	kconf "github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
@@ -12,11 +13,12 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/attribute"
+
 	"go.opentelemetry.io/otel/sdk/resource"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"gopkg.in/yaml.v2"
-	"multicluster/internal/conf"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
@@ -79,16 +81,22 @@ func main() {
 		panic(err)
 	}
 
+
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(bc.Trace.Endpoint)))
 	if err != nil {
 		panic(err)
 	}
 	tp := tracesdk.NewTracerProvider(
+		tracesdk.WithSampler(tracesdk.ParentBased(tracesdk.TraceIDRatioBased(1.0))),
 		tracesdk.WithBatcher(exp),
 		tracesdk.WithResource(resource.NewSchemaless(
 			semconv.ServiceNameKey.String(Name),
+			attribute.String("env", "dev"),
+
 		)),
 	)
+	
+	//otel.SetTracerProvider(tp)
 
 	app, cleanup, err := wireApp(bc.Server, bc.Data, logger, tp)
 	if err != nil {
