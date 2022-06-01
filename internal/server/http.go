@@ -5,6 +5,8 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/go-kratos/swagger-api/openapiv2"
+
 	cluster "multicluster/api/cluster/v1"
 	component "multicluster/api/component/v1"
 	"multicluster/internal/conf"
@@ -29,6 +31,8 @@ func NewHTTPServer(c *conf.Server, cls *service.MultiClusterService, logger log.
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
+	openAPIhandler := openapiv2.NewHandler()
+	srv.HandlePrefix("/q/", openAPIhandler)
 	cluster.RegisterClusterHTTPServer(srv, cls)
 	component.RegisterComponentHTTPServer(srv, cls)
 
