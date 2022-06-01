@@ -43,6 +43,11 @@ page:
 ent:
 	cd internal/data/ && ent generate ./ent/schema
 
+.PHONY: swagger-ui
+# open swagger ui
+swagger-ui:
+	open http://127.0.0.1:8000/q/swagger-ui
+
 .PHONY: wire
 # generate wire
 wire:
