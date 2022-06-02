@@ -9,6 +9,7 @@ message Bootstrap {
   Trace trace = 1;
   Server server = 2;
   Data data = 3;
+  JWT jwt = 4;
 }
 
 message Trace {
@@ -43,4 +44,8 @@ message Data {
   }
   Database database = 1;
   Redis redis = 2;
+}
+
+message JWT {
+  string secret = 1;
 }
