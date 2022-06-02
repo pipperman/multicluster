@@ -188,9 +188,13 @@ message ClusterCreateRequest {
     }
     CreateOption option = 1;
     string name = 2;
-    string version =3;
-    string accountID=4;
-    string cluster_spec=5;
+    string version = 3;
+    string account_id = 4;
+    string cluster_type = 5;
+    string cluster_spec = 6;
+    string region_id = 7;
+    string vpc_id = 8;
+    string zone_id = 9;
 }
 
 message ClusterCreateReply {

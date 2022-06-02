@@ -4,11 +4,14 @@ go 1.17
 
 require (
 	entgo.io/ent v0.10.1
+	github.com/davecgh/go-spew v1.1.1
 	github.com/go-kratos/kratos/v2 v2.3.1-0.20220531020131-5de1f081f636
 	github.com/go-kratos/swagger-api v1.0.1
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/golang-jwt/jwt/v4 v4.4.1
 	github.com/google/uuid v1.3.0
 	github.com/google/wire v0.5.0
+	github.com/gorilla/handlers v1.5.1
 	github.com/jinzhu/copier v0.3.5
 	go.opentelemetry.io/otel v1.7.0
 	go.opentelemetry.io/otel/exporters/jaeger v1.7.0
@@ -24,6 +27,7 @@ require (
 	ariga.io/atlas v0.3.7-0.20220303204946-787354f533c3 // indirect
 	github.com/agext/levenshtein v1.2.1 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
+	github.com/felixge/httpsnoop v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-kratos/grpc-gateway/v2 v2.5.1-0.20210811062259-c92d36e434b1 // indirect

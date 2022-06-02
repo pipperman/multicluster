@@ -29,20 +29,19 @@ func (r *clusterRepo) Create(ctx context.Context, c *biz.Cluster, option *biz.Cl
 	item, err := r.data.db.Cluster.Create().
 		SetName(c.Name).
 		SetClusterSpec(c.ClusterSpec).
-		SetClusterType("managed").
-		SetVpcID("1c1101223").
-		SetZoneID("232323").
+		SetClusterType(c.ClusterType).
+		SetVpcID(c.VpcId).
+		SetZoneID(c.ZoneId).
 		SetClusterID(uuid.New().String()).
 		SetVersion(c.Version).
-		SetRegionID("1c00033").
-		SetEnableDeletionProtection(true).
+		SetRegionID(c.RegionId).
 		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
-	r.log.Info("Cluster was created")
+	//r.log.WithContext(ctx).Info("Cluster was created")
 	return &biz.Cluster{
-		ClusterId: "",
+		ClusterId: item.ClusterID,
 		Name:      item.Name,
 	}, nil
 }
