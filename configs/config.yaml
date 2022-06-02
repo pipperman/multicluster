@@ -10,8 +10,10 @@ server:
 data:
   database:
     driver: mysql
-    source: root:root@tcp(127.0.0.1:3306)/multicluster?parseTime=true
+    source: root:Zaq!Xsw@@tcp(127.0.0.1:30306)/multicluster?parseTime=true
   redis:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
+jwt:
+  secret: "ctyun"

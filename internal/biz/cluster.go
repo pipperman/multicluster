@@ -2,9 +2,11 @@ package biz
 
 import (
 	"context"
-
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
+	"github.com/go-kratos/kratos/v2/transport/http"
+	workorder "github.com/pipperman/workorder/api/workorder/v1"
 	v1 "multicluster/api/cluster/v1"
 )
 
@@ -79,12 +81,23 @@ type ClusterUsecase struct {
 
 // NewClusterUsecase new a Cluster usecase.
 func NewClusterUsecase(repo ClusterRepo, logger log.Logger) *ClusterUsecase {
-	return &ClusterUsecase{repo: repo, log: log.NewHelper(logger)}
+	return &ClusterUsecase{repo: repo, log: log.NewHelper(log.With(logger, "module", "usecase/cluster"))}
 }
 
 // CreateCluster creates a Cluster, and returns the new Cluster.
 func (uc *ClusterUsecase) CreateCluster(ctx context.Context, c *Cluster, option *ClusterCreateOption) (*Cluster, error) {
-	uc.log.WithContext(ctx).Infof("Create Cluster: %v", c.ClusterId)
+	cliWorkOrder, err := http.NewClient(context.Background(), http.WithEndpoint("127.0.0.1:8001"), http.WithMiddleware(tracing.Client()))
+	if err != nil {
+		return nil, err
+	}
+	_, err = workorder.NewOrderHTTPClient(cliWorkOrder).Purchase(ctx, &workorder.HelloRequest{Name: "hhh"})
+
+	if err != nil {
+		return nil, err
+	}
+
+	uc.log.WithContext(ctx).Infof("Create Cluster: %v", c.Name)
+
 	return uc.repo.Create(ctx, c, option)
 }
 

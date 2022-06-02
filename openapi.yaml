@@ -3,7 +3,7 @@
 
 openapi: 3.0.3
 info:
-    title: ""
+    title: "multicluster"
     version: 0.0.1
 paths:
     /api/v1/clusters:
@@ -345,9 +345,17 @@ components:
                     type: string
                 version:
                     type: string
-                accountID:
+                accountId:
+                    type: string
+                clusterType:
                     type: string
                 clusterSpec:
+                    type: string
+                regionId:
+                    type: string
+                vpcId:
+                    type: string
+                zoneId:
                     type: string
         ClusterCreateRequest_CreateOption:
             type: object

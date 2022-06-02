@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 )
 
 var _ biz.ClusterRepo = (*clusterRepo)(nil)
@@ -20,28 +21,27 @@ type clusterRepo struct {
 func NewClusterRepo(data *Data, logger log.Logger) biz.ClusterRepo {
 	return &clusterRepo{
 		data: data,
-		log:  log.NewHelper(logger),
+		log:  log.NewHelper(log.With(logger, "module", "repo/cluster")),
 	}
 }
 
 func (r *clusterRepo) Create(ctx context.Context, c *biz.Cluster, option *biz.ClusterCreateOption) (*biz.Cluster, error) {
 	item, err := r.data.db.Cluster.Create().
-	SetName(c.Name).
-	SetClusterSpec(c.ClusterSpec).
-	SetClusterType("managed").
-	SetVpcID("1c1101223").
-	SetZoneID("232323").
-	SetClusterID(uuid.New().String()).
-	SetVersion(c.Version).
-	SetRegionID("1c00033").
-	SetEnableDeletionProtection(true).
-	Save(ctx)
+		SetName(c.Name).
+		SetClusterSpec(c.ClusterSpec).
+		SetClusterType(c.ClusterType).
+		SetVpcID(c.VpcId).
+		SetZoneID(c.ZoneId).
+		SetClusterID(uuid.New().String()).
+		SetVersion(c.Version).
+		SetRegionID(c.RegionId).
+		Save(ctx)
 	if err != nil {
 		return nil, err
 	}
-	r.log.Info("Cluster was created")
+	//r.log.WithContext(ctx).Info("Cluster was created")
 	return &biz.Cluster{
-		ClusterId: "",
+		ClusterId: item.ClusterID,
 		Name:      item.Name,
 	}, nil
 }
@@ -66,12 +66,10 @@ func (r *clusterRepo) Get(ctx context.Context, option *biz.ClusterGetOption) (*b
 	if err != nil {
 		return nil, err
 	}
-	return &biz.Cluster{
-		Id:        item.ID,
-		ClusterId: item.ClusterID,
-		Name:      item.Name,
-		Version:   item.Version,
-	}, nil
+	cluster:=&biz.Cluster{}
+	copier.Copy(cluster,item)
+	return cluster,nil
+	
 }
 
 func (r *clusterRepo) List(ctx context.Context, pageNum, pageSize int64, option *biz.ClusterListOption) ([]*biz.Cluster, error) {

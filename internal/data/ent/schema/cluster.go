@@ -28,7 +28,8 @@ func (Cluster) Fields() []ent.Field {
 		field.String("region_id"),
 		field.String("vpc_id"),
 		field.String("zone_id"),
-		field.Bool("enable_deletion_protection"),
+		field.Bool("enable_deletion_protection").
+			Default(true),
 		field.Time("created_at").
 			Default(time.Now).SchemaType(map[string]string{
 			dialect.MySQL: "datetime",
