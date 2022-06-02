@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 )
 
 var _ biz.ClusterRepo = (*clusterRepo)(nil)
@@ -65,12 +66,10 @@ func (r *clusterRepo) Get(ctx context.Context, option *biz.ClusterGetOption) (*b
 	if err != nil {
 		return nil, err
 	}
-	return &biz.Cluster{
-		Id:        item.ID,
-		ClusterId: item.ClusterID,
-		Name:      item.Name,
-		Version:   item.Version,
-	}, nil
+	cluster:=&biz.Cluster{}
+	copier.Copy(cluster,item)
+	return cluster,nil
+	
 }
 
 func (r *clusterRepo) List(ctx context.Context, pageNum, pageSize int64, option *biz.ClusterListOption) ([]*biz.Cluster, error) {
