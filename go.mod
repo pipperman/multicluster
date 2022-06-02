@@ -17,6 +17,7 @@ require (
 	google.golang.org/grpc v1.46.2
 	google.golang.org/protobuf v1.28.0
 	gopkg.in/yaml.v2 v2.4.0
+	test/workorder v0.1.1
 )
 
 require (
@@ -49,3 +50,5 @@ require (
 	golang.org/x/xerrors v0.0.0-20220517211312-f3a8303e98df // indirect
 	gopkg.in/yaml.v3 v3.0.0 // indirect
 )
+
+replace test/workorder v0.1.1 => /Users/zhaoli/ctyun/workorder
