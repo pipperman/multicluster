@@ -66,10 +66,10 @@ func (r *clusterRepo) Get(ctx context.Context, option *biz.ClusterGetOption) (*b
 	if err != nil {
 		return nil, err
 	}
-	cluster:=&biz.Cluster{}
-	copier.Copy(cluster,item)
-	return cluster,nil
-	
+	cluster := &biz.Cluster{}
+	copier.Copy(cluster, item)
+	return cluster, nil
+
 }
 
 func (r *clusterRepo) List(ctx context.Context, pageNum, pageSize int64, option *biz.ClusterListOption) ([]*biz.Cluster, error) {

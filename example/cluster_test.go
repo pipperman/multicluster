@@ -2,7 +2,6 @@ package example
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -16,7 +15,7 @@ import (
 	//"multicluster/internal/middleware/auth"
 )
 
-func TestClusterClient(t *testing.T) {
+func createCluster() error {
 	ctx := context.Background()
 	cli, err := http.NewClient(ctx, http.WithEndpoint("127.0.0.1:8000"),
 		http.WithMiddleware(
@@ -32,11 +31,11 @@ func TestClusterClient(t *testing.T) {
 			),
 		))
 	if err != nil {
-		t.Fatal(err)
+		return err
 	}
 
 	clientCluster := v1.NewClusterHTTPClient(cli)
-	reply, err := clientCluster.CreateCluster(context.Background(),
+	_, err = clientCluster.CreateCluster(context.Background(),
 		&v1.ClusterCreateRequest{
 			Name:        "test-333",
 			ClusterType: string(constant.Managed),
@@ -48,7 +47,20 @@ func TestClusterClient(t *testing.T) {
 		},
 	)
 	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func TestClusterClient(t *testing.T) {
+	err := createCluster()
+	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println(reply.ClusterId)
+}
+
+func BenchmarkClusterCreate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		createCluster()
+	}
 }
