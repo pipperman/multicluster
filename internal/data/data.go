@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/go-kratos/kratos/v2/log"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/wire"
 	"multicluster/internal/conf"
 	"multicluster/internal/data/ent"
 	"multicluster/internal/data/ent/migrate"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 // ProviderSet is data providers.

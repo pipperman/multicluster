@@ -5,8 +5,8 @@ import (
 	v1 "multicluster/api/cluster/v1"
 	"multicluster/internal/biz"
 
-	"github.com/jinzhu/copier"
 	"github.com/go-kratos/kratos/v2/errors"
+	"github.com/jinzhu/copier"
 )
 
 // CreateCluster implements multicluster.ClusterServer.
@@ -15,8 +15,8 @@ func (s *MultiClusterService) CreateCluster(ctx context.Context, in *v1.ClusterC
 	copier.Copy(cluster, in)
 	c, err := s.cls.CreateCluster(ctx, cluster, &biz.ClusterCreateOption{})
 	if err != nil {
-		return nil, errors.InternalServer(err.Error(),"cluster create error").WithMetadata(map[string]string{"a":"b"})
-		
+		return nil, errors.InternalServer(err.Error(), "cluster create error").WithMetadata(map[string]string{"a": "b"})
+
 	}
 
 	return &v1.ClusterCreateReply{ClusterId: "Hello " + c.Name}, nil
@@ -30,8 +30,8 @@ func (s *MultiClusterService) GetCluster(ctx context.Context, in *v1.ClusterRequ
 	if err != nil {
 		return nil, err
 	}
-	metadata:=&v1.ClusterMetadata{}
-	copier.Copy(metadata,c)
+	metadata := &v1.ClusterMetadata{}
+	copier.Copy(metadata, c)
 
 	return &v1.ClusterReply{Metadata: metadata}, nil
 }

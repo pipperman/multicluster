@@ -2,35 +2,39 @@ package server
 
 import (
 	"context"
+
+	prom "github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/metadata"
+	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/selector"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/go-kratos/swagger-api/openapiv2"
 	"github.com/gorilla/handlers"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/otel"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
-	"multicluster/internal/middleware/auth"
 
 	cluster "multicluster/api/cluster/v1"
 	component "multicluster/api/component/v1"
 	"multicluster/internal/conf"
+	"multicluster/internal/middleware/auth"
 	"multicluster/internal/service"
 )
 
 func NewSkipRoutersMatcher() selector.MatchFunc {
 
 	skipRouters := map[string]struct{}{
-		"/multicluster.v1.Cluster/Create":        {},
+		"/multicluster.v1.Cluster/Create":  {},
 		"/multicluster.v1.Cluster/Get":     {},
-		"/multicluster.v1.Cluster/List":   {},
-		"/multicluster.v1.Cluster/Update": {},
+		"/multicluster.v1.Cluster/List":    {},
+		"/multicluster.v1.Cluster/Update":  {},
 		"/multicluster.v1.Cluster/Delete":  {},
-		"/multicluster.v1.Cluster/Log":      {},
-		"/multicluster.v1.Cluster/Managed":   {},
+		"/multicluster.v1.Cluster/Log":     {},
+		"/multicluster.v1.Cluster/Managed": {},
 	}
 
 	return func(ctx context.Context, operation string) bool {
@@ -42,7 +46,7 @@ func NewSkipRoutersMatcher() selector.MatchFunc {
 }
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, jwtc *conf.JWT, cls *service.MultiClusterService, logger log.Logger,tp *tracesdk.TracerProvider) *http.Server {
+func NewHTTPServer(c *conf.Server, jwtc *conf.JWT, cls *service.MultiClusterService, logger log.Logger, tp *tracesdk.TracerProvider) *http.Server {
 	otel.SetTracerProvider(tp)
 	var opts = []http.ServerOption{
 		http.ErrorEncoder(errorEncoder),
@@ -54,6 +58,10 @@ func NewHTTPServer(c *conf.Server, jwtc *conf.JWT, cls *service.MultiClusterServ
 			logging.Server(logger),
 			metadata.Server(),
 			auth.JWTAuth(jwtc.Secret),
+			metrics.Server(
+				metrics.WithSeconds(prom.NewHistogram(_metricSeconds)),
+				metrics.WithRequests(prom.NewCounter(_metricRequests)),
+			),
 		),
 		http.Filter(
 			handlers.CORS(
@@ -75,6 +83,7 @@ func NewHTTPServer(c *conf.Server, jwtc *conf.JWT, cls *service.MultiClusterServ
 	srv := http.NewServer(opts...)
 	openAPIHandler := openapiv2.NewHandler()
 	srv.HandlePrefix("/q/", openAPIHandler)
+	srv.Handle("/metrics", promhttp.Handler())
 	cluster.RegisterClusterHTTPServer(srv, cls)
 	component.RegisterComponentHTTPServer(srv, cls)
 

@@ -1,0 +1,19 @@
+version: '3'
+services:
+  cluster-web:
+    image: ecloud.io/multicluster-web:0.1.0
+    ports:
+      - 80:80
+    depends_on:
+      - cluster-db
+  cluster-admin:
+    image: ecloud.io/multicluster-admin:0.1.0
+    ports:
+      - 81:81
+  cluster-db:
+    image: ecloud.io/mysql:5.7
+    ports:
+      - "3306:3306"
+    hostname: cluster-db
+    environment:
+      MYSQL_ROOT_PASSWORD: dangerous
