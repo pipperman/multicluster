@@ -17,5 +17,6 @@ spec:
     enabled: false
   agent:
     strategy: DaemonSet
+    image: jaegertracing/jaeger-agent:latest
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ""
