@@ -39,6 +39,15 @@ kubectl apply -f mysql.yaml
 
 - ### Jaeger-Operator
 
+#### deploy cert-manager
+
+```shell
+# step 1
+OS=$(go env GOOS); ARCH=$(go env GOARCH); curl -sSL -o cmctl.tar.gz https://github.com/cert-manager/cert-manager/releases/download/v1.7.2/cmctl-$OS-$ARCH.tar.gz
+# step 2
+cmctl x install
+```
+
 #### create jaeger operator
 [jaeger-operator.yaml](../deploy/kubernetes/observability/jaeger-operator.yaml)
 
