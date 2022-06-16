@@ -75,6 +75,7 @@ kubectl apply -f jaeger-operator.yaml
 ```shell
 # download image
 jaegertracing/all-in-one:1.34.1
+jaegertracing/jaeger-agent:1.34.1
 
 kubectl apply -f jaeger-all-in-one.yaml
 ```
