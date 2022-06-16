@@ -40,12 +40,25 @@ kubectl apply -f mysql.yaml
 - ### Jaeger-Operator
 
 #### deploy cert-manager
+[cert-manager.yaml](../deploy/kubernetes/cert-manager/cert-manager.yaml)
 
+#### online
 ```shell
 # step 1
 OS=$(go env GOOS); ARCH=$(go env GOARCH); curl -sSL -o cmctl.tar.gz https://github.com/cert-manager/cert-manager/releases/download/v1.7.2/cmctl-$OS-$ARCH.tar.gz
 # step 2
 cmctl x install
+```
+
+#### offline
+
+```shell
+# download image
+quay.io/jetstack/cert-manager-webhook:v1.8.0
+quay.io/jetstack/cert-manager-controller:v1.8.0
+quay.io/jetstack/cert-manager-cainjector:v1.8.0
+
+kubectl apply -f cert-manager.yaml
 ```
 
 #### create jaeger operator
@@ -60,6 +73,9 @@ kubectl apply -f jaeger-operator.yaml
 [jaeger-all-in-one.yaml](../deploy/kubernetes/observability/jaeger-all-in-one.yaml)
 
 ```shell
+# download image
+jaegertracing/all-in-one:1.34.1
+
 kubectl apply -f jaeger-all-in-one.yaml
 ```
 
