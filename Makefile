@@ -2,6 +2,8 @@ GOPATH:=$(shell go env GOPATH)
 VERSION=$(shell git describe --tags --always)
 INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 API_PROTO_FILES=$(shell find api -name *.proto)
+APP_NAME="web"
+DOCKER_IMAGE=$(shell echo $(APP_NAME):$(VERSION) |awk -F '@' '{print "ecloud.io/cluster-" $$0}')
 
 .PHONY: init
 # init env
@@ -66,6 +68,11 @@ wire:
 # build
 build:
 	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
+
+.PHONY: docker
+# docker
+docker:
+	 docker build -t $(DOCKER_IMAGE) -f deploy/build/Dockerfile --build-arg APP_RELATIVE_PATH=multicluster .
 
 .PHONY: generate
 # generate

@@ -10,12 +10,16 @@ Alien, is an open source system for managing cloud container cluster.It provides
 ## Component
 
 ---
+- Dependency
 
 | Component  | Version | Deploy     |
 |------------|---------|------------|
 | Mysql      | 5.6     | Deployment |
+| Cert-Manager  | 1.8.0   | Operator |
 | Jaeger     | 1.34.1  | Operator   |
 | Prometheus | 2.10    | Operator   |
+
+- Micro Service
 
 
 ## Quick Start
@@ -37,10 +41,7 @@ Alien, is an open source system for managing cloud container cluster.It provides
 kubectl apply -f mysql.yaml
 ```
 
-- ### Jaeger-Operator
-
-#### deploy cert-manager
-[cert-manager.yaml](../deploy/kubernetes/cert-manager/cert-manager.yaml)
+- ### Cert-Manager
 
 #### online
 ```shell
@@ -52,6 +53,8 @@ cmctl x install
 
 #### offline
 
+[cert-manager.yaml](../deploy/kubernetes/cert-manager/cert-manager.yaml)
+
 ```shell
 # download image
 quay.io/jetstack/cert-manager-webhook:v1.8.0
@@ -60,6 +63,9 @@ quay.io/jetstack/cert-manager-cainjector:v1.8.0
 
 kubectl apply -f cert-manager.yaml
 ```
+
+
+- ### Jaeger-Operator
 
 #### create jaeger operator
 [jaeger-operator.yaml](../deploy/kubernetes/observability/jaeger-operator.yaml)
@@ -84,7 +90,11 @@ kubectl apply -f jaeger-all-in-one.yaml
 
 
 
-### 3. Deploy Alien
+### 3. Install Kompose
+
+- [Installation](https://kompose.io/installation/)
+
+### 4. Deploy Alien
 
 ```shell
 kompose convert -f deploy/docker-compose/docker-compose.yaml -o deploy/kubernetes
