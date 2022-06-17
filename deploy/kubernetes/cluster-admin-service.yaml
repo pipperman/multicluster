@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f deploy/docker-compose/docker-compose.yaml -o deploy/kubernetes
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: cluster-admin
+  name: cluster-admin
+spec:
+  ports:
+    - name: "81"
+      port: 81
+      targetPort: 81
+  selector:
+    io.kompose.service: cluster-admin
+status:
+  loadBalancer: {}

@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f docker-compose.yaml -o ../kubernetes
-    kompose.version: 1.22.0 (955b78124)
+    kompose.cmd: kompose convert -f deploy/docker-compose/docker-compose.yaml -o deploy/kubernetes
+    kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
     io.kompose.service: cluster-web
@@ -17,8 +17,8 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f docker-compose.yaml -o ../kubernetes
-        kompose.version: 1.22.0 (955b78124)
+        kompose.cmd: kompose convert -f deploy/docker-compose/docker-compose.yaml -o deploy/kubernetes
+        kompose.version: 1.26.0 (40646f47)
       creationTimestamp: null
       labels:
         io.kompose.service: cluster-web
@@ -26,7 +26,8 @@ spec:
       containers:
         - image: ecloud.io/multicluster-web:0.1.0
           name: cluster-web
+          ports:
+            - containerPort: 80
           resources: {}
-      hostname: cluster-web
       restartPolicy: Always
 status: {}

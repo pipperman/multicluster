@@ -85,3 +85,9 @@ kubectl apply -f jaeger-all-in-one.yaml
 
 
 ### 3. Deploy Alien
+
+```shell
+kompose convert -f deploy/docker-compose/docker-compose.yaml -o deploy/kubernetes
+
+kubectl apply -f .
+```
