@@ -6,13 +6,13 @@ metadata:
     kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
-    io.kompose.service: cluster-db
-  name: cluster-db
+    io.kompose.service: cluster-admin
+  name: cluster-admin
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: cluster-db
+      io.kompose.service: cluster-admin
   strategy: {}
   template:
     metadata:
@@ -21,17 +21,13 @@ spec:
         kompose.version: 1.26.0 (40646f47)
       creationTimestamp: null
       labels:
-        io.kompose.service: cluster-db
+        io.kompose.service: cluster-admin
     spec:
       containers:
-        - env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: dangerous
-          image: ecloud.io/mysql:5.7
-          name: cluster-db
+        - image: ecloud.io/multicluster-admin:0.1.0
+          name: cluster-admin
           ports:
-            - containerPort: 3306
+            - containerPort: 81
           resources: {}
-      hostname: cluster-db
       restartPolicy: Always
 status: {}
